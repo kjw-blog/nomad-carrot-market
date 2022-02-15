@@ -4,7 +4,7 @@ export default function Cards() {
   const [num, setNum] = useState(0);
   return (
     <div className="bg-slate-400 py-20 px-20 grid gap-5 min-h-screen">
-      <div className="bg-white p-6 rounded-3xl shadow-2xl">
+      <div className="bg-white sm:bg-orange-400 sm:hover:bg-pink-400 md:bg-yellow-400 lg:bg-green-400 xl:bg-indigo-500 2xl:bg-purple-500 p-6 rounded-3xl shadow-2xl">
         <span className="font-semibold text-3xl">Select Item</span>
         <ul>
           {[1, 2, 3, 4].map((i) => (
