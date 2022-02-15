@@ -17,9 +17,13 @@ const Home: NextPage = () => {
           <span>Total</span>
           <span className="font-semibold">10$</span>
         </div>
-        <div className="bg-blue-500 text-white py-5 text-center mt-4 w-1/2 mx-auto rounded-xl">
+        <button
+          className="bg-blue-500 text-white py-5 text-center mt-4 w-1/2 mx-auto rounded-xl block 
+        hover:bg-teal-500 hover:text-black
+        active:bg-yellow-500 focus:bg-red-500"
+        >
           Checkout
-        </div>
+        </button>
       </div>
       <div className="bg-white overflow-hidden rounded-2xl shadow-2xl">
         <div className="bg-blue-500 p-6 pb-14">
@@ -43,7 +47,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </div>
-      <div className="bg-white p-6 rounded-2xl shadow-2xl">
+      <div className="bg-white p-6 rounded-3xl shadow-xl">
         <div className="flex justify-between items-center mb-5">
           <span>⬅️</span>
           <div className="space-x-3">
@@ -56,11 +60,12 @@ const Home: NextPage = () => {
           <span className="font-semibold text-xl ">Swoon Lounge</span>
           <span className="text-xs text-gray-500">Chair</span>
           <div className="mt-3 mb-5 flex justify-between items-center">
-            <div>
-              <input type="radio" />
-              <input type="radio" />
-              <input type="radio" />
+            <div className="space-x-2">
+              <button className="w-5 h-5 rounded-full bg-yellow-500 bg-opacity-50 focus:bg-opacity-100 focus:ring-2 ring-offset-2 ring-yellow-500 transition" />
+              <button className="w-5 h-5 rounded-full bg-indigo-500 bg-opacity-50 focus:bg-opacity-100 focus:ring-2 ring-offset-2 ring-indigo-500 transition" />
+              <button className="w-5 h-5 rounded-full bg-teal-500 bg-opacity-50 focus:bg-opacity-100 focus:ring-2 ring-offset-2 ring-teal-500 transition" />
             </div>
+
             <div className="flex items-center space-x-5">
               <button className=" bg-blue-200 flex justify-center items-center aspect-square w-8 text-xl text-gray-500 rounded-lg">
                 -
