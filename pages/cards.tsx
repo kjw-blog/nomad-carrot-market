@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function Cards() {
   const [num, setNum] = useState(0);
   return (
-    <div className="bg-slate-400 py-20 px-20 grid gap-5 min-h-screen">
-      <div className="bg-white sm:bg-orange-400 sm:hover:bg-pink-400 md:bg-yellow-400 lg:bg-green-400 xl:bg-indigo-500 2xl:bg-purple-500 p-6 rounded-3xl shadow-2xl">
+    <div className="bg-slate-400 py-20 px-20 grid xl:place-content-center lg:grid-cols-2 xl:grid-cols-3 gap-10 min-h-screen">
+      <div className="bg-white flex flex-col justify-between p-6 rounded-3xl shadow-2xl">
         <span className="font-semibold text-3xl">Select Item</span>
         <ul>
           {[1, 2, 3, 4].map((i) => (
@@ -27,7 +27,7 @@ export default function Cards() {
         </button>
       </div>
       <div className="bg-white overflow-hidden rounded-2xl shadow-2xl group">
-        <div className="bg-blue-500 p-6 pb-14">
+        <div className=" portrait:bg-indigo-600 landscape:bg-teal-500 p-6 pb-14 xl:pb-40">
           <span className="text-white text-2xl">Profile</span>
         </div>
         <div className="rounded-3xl p-6 relative -top-5 bg-white">
@@ -48,7 +48,7 @@ export default function Cards() {
           </div>
         </div>
       </div>
-      <div className="bg-white p-6 rounded-3xl shadow-xl">
+      <div className="bg-white p-6 rounded-3xl lg:col-span-2 xl:col-span-1 shadow-xl">
         <div className="flex justify-between items-center mb-5">
           <span>⬅️</span>
           <div className="space-x-3">
@@ -73,7 +73,7 @@ export default function Cards() {
                   if (num > 0) {
                     setNum((prev) => prev - 1);
                   } else {
-                    alert('- 실패');
+                    alert("- 실패");
                   }
                 }}
                 className=" bg-blue-200 flex justify-center items-center aspect-square w-8 text-xl text-gray-500 rounded-lg active:bg-blue-300"
@@ -86,7 +86,7 @@ export default function Cards() {
                   if (num < 9) {
                     setNum((prev) => prev + 1);
                   } else {
-                    alert('+ 실패');
+                    alert("+ 실패");
                   }
                 }}
                 className=" bg-blue-200 flex justify-center items-center aspect-square w-8 text-xl text-gray-500 rounded-lg active:bg-blue-300"
