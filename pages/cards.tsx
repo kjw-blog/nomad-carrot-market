@@ -3,14 +3,18 @@ import { useState } from "react";
 export default function Cards() {
   const [num, setNum] = useState(0);
   return (
-    <div className="bg-slate-400 py-20 px-20 grid xl:place-content-center lg:grid-cols-2 xl:grid-cols-3 gap-10 min-h-screen">
-      <div className="bg-white flex flex-col justify-between p-6 rounded-3xl shadow-2xl">
-        <span className="font-semibold text-3xl">Select Item</span>
+    <div className="bg-slate-400 py-20 dark px-20 grid xl:place-content-center lg:grid-cols-2 xl:grid-cols-3 gap-10 min-h-screen">
+      <div className="bg-white dark:bg-black flex flex-col justify-between p-6 rounded-3xl shadow-2xl">
+        <span className="font-semibold dark:text-white text-3xl">
+          Select Item
+        </span>
         <ul>
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="flex justify-between my-2">
-              <span className="text-gray-500">Grey Chair</span>
-              <span className="font-semibold">19$</span>
+              <span className="text-gray-500 dark:text-gray-100">
+                Grey Chair
+              </span>
+              <span className="font-semibold dark:text-white">19$</span>
             </div>
           ))}
         </ul>
@@ -19,9 +23,11 @@ export default function Cards() {
           <span className="font-semibold">10$</span>
         </div>
         <button
-          className="bg-blue-500 text-white py-5 text-center mt-4 w-1/2 mx-auto rounded-xl block
+          className="bg-blue-500 dark:bg-black dark:border dark:border-white text-white py-5 text-center mt-4 w-1/2 mx-auto rounded-xl block
           hover:bg-teal-500 hover:text-black
-          active:bg-yellow-500 focus:bg-red-500"
+          active:bg-yellow-500 focus:bg-red-500
+          dark:hover:bg-white
+          "
         >
           Checkout
         </button>
