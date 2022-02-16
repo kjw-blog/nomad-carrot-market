@@ -32,32 +32,36 @@ export default function Cards() {
         </div>
       </div>
       <div
-        className={`bg-slate-400 p-20 grid xl:place-content-center lg:grid-cols-2 xl:grid-cols-3 gap-10 min-h-screen ${
+        className={`bg-slate-400  p-20 grid xl:place-content-center lg:grid-cols-2 xl:grid-cols-3 gap-10 min-h-screen ${
           useDarkMode && 'dark'
         }`}
       >
-        <div className="bg-white dark:bg-black flex flex-col justify-between p-6 rounded-3xl shadow-2xl">
+        <div className="bg-white dark:bg-black flex flex-col justify-between p-6 transition rounded-3xl shadow-2xl">
           <span className="font-semibold dark:text-white text-3xl">
             Select Item
           </span>
           <ul>
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="flex justify-between my-2">
-                <span className="text-gray-500 dark:text-gray-100">
+                <span className="text-gray-500 dark:text-gray-100 transition">
                   Grey Chair
                 </span>
-                <span className="font-semibold dark:text-white">19$</span>
+                <span className="font-semibold dark:text-white transition">
+                  19$
+                </span>
               </div>
             ))}
           </ul>
           <div className="flex justify-between mt-2 pt-2 border-t-2 border-dashed">
-            <span className=" dark:text-white">Total</span>
-            <span className="font-semibold dark:text-white">10$</span>
+            <span className=" dark:text-white transition">Total</span>
+            <span className="font-semibold dark:text-white transition">
+              10$
+            </span>
           </div>
           <button
             className="bg-blue-500 dark:bg-black dark:border dark:border-white text-white py-5 text-center mt-4 w-1/2 mx-auto rounded-xl block
           hover:bg-teal-500 hover:text-black
-          dark:hover:bg-white
+          dark:hover:bg-white transition
           "
           >
             Checkout
