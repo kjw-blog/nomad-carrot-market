@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function Cards() {
   const [num, setNum] = useState(0);
   return (
-    <div className="bg-slate-400 py-20 dark px-20 grid xl:place-content-center lg:grid-cols-2 xl:grid-cols-3 gap-10 min-h-screen">
+    <div className="bg-slate-400 py-20 px-20 grid xl:place-content-center lg:grid-cols-2 xl:grid-cols-3 gap-10 min-h-screen">
       <div className="bg-white dark:bg-black flex flex-col justify-between p-6 rounded-3xl shadow-2xl">
         <span className="font-semibold dark:text-white text-3xl">
           Select Item
@@ -19,8 +19,8 @@ export default function Cards() {
           ))}
         </ul>
         <div className="flex justify-between mt-2 pt-2 border-t-2 border-dashed">
-          <span>Total</span>
-          <span className="font-semibold">10$</span>
+          <span className=" dark:text-white">Total</span>
+          <span className="font-semibold dark:text-white">10$</span>
         </div>
         <button
           className="bg-blue-500 dark:bg-black dark:border dark:border-white text-white py-5 text-center mt-4 w-1/2 mx-auto rounded-xl block
@@ -79,7 +79,7 @@ export default function Cards() {
                   if (num > 0) {
                     setNum((prev) => prev - 1);
                   } else {
-                    alert("- 실패");
+                    alert('- 실패');
                   }
                 }}
                 className=" bg-blue-200 flex justify-center items-center aspect-square w-8 text-xl text-gray-500 rounded-lg active:bg-blue-300"
@@ -92,7 +92,7 @@ export default function Cards() {
                   if (num < 9) {
                     setNum((prev) => prev + 1);
                   } else {
-                    alert("+ 실패");
+                    alert('+ 실패');
                   }
                 }}
                 className=" bg-blue-200 flex justify-center items-center aspect-square w-8 text-xl text-gray-500 rounded-lg active:bg-blue-300"
