@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 
-const LiveDetail: NextPage = () => {
+const StreamDetail: NextPage = () => {
   return (
     <div className="py-10 px-4 space-y-4">
       <div className="w-full bg-slate-300 aspect-video rounded-md shadow-sm" />
@@ -98,4 +98,4 @@ const LiveDetail: NextPage = () => {
   );
 };
 
-export default LiveDetail;
+export default StreamDetail;
