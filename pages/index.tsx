@@ -1,7 +1,13 @@
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 
 const Home: NextPage = () => {
+  const router = useRouter();
+  const onClick = () => {
+    router.push('/items/upload');
+  };
+
   return (
     <Layout title="홈" hasTabBar>
       <div className="flex flex-col space-y-5 py-10">
@@ -58,7 +64,10 @@ const Home: NextPage = () => {
             </div>
           </div>
         ))}
-        <button className="fixed bottom-24 right-5 hover:bg-orange-500 cursor-pointer transition-colors bg-orange-400 rounded-full p-5 text-white shadow-xl">
+        <button
+          onClick={onClick}
+          className="fixed bottom-24 right-5 hover:bg-orange-500 cursor-pointer transition-colors bg-orange-400 rounded-full p-5 text-white shadow-xl"
+        >
           <svg
             className="h-6 w-6"
             xmlns="http://www.w3.org/2000/svg"
