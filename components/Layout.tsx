@@ -24,12 +24,15 @@ export default function Layout({
     <div>
       <div
         className={cls(
-          !canGoBack ? 'justify-center' : 'pl-3',
-          'bg-white text-gray-900 w-full text-lg max-w-lg font-semibold py-3 fixed  border-b top-0 flex items-center'
+          !title ? 'py-[1.65rem]' : 'py-3',
+          'bg-white text-gray-900 w-full text-lg max-w-lg font-semibold fixed  border-b top-0 flex items-center'
         )}
       >
         {canGoBack ? (
-          <button onClick={onClick}>
+          <button
+            onClick={onClick}
+            className={cls('absolute left-4', !title ? 'py-10' : '')}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -46,7 +49,7 @@ export default function Layout({
             </svg>
           </button>
         ) : null}
-        {title ? <span>{title}</span> : null}
+        {title ? <span className="mx-auto">{title}</span> : null}
       </div>
       <div className={cls('pt-8', hasTabBar ? ' pb-[2.5rem]' : '')}>
         {children}
