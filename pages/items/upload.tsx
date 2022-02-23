@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Layout from '../../components/Layout';
+import Textarea from '../../components/Textarea';
 
 const Upload: NextPage = () => {
   return (
@@ -35,13 +36,7 @@ const Upload: NextPage = () => {
           required
         />
         <div>
-          <label className="mb-1 block text-sm text-gray-700 font-semibold">
-            Description
-          </label>
-          <textarea
-            className="mt-1 shadow-sm w-full transition focus:ring-orange-500 rounded-md border-gray-300 focus:border-orange-500"
-            rows={4}
-          />
+          <Textarea label="Description" />
         </div>
         <Button text="Upload product" />
       </form>
