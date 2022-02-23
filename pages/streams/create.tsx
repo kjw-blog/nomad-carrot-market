@@ -17,7 +17,7 @@ const Create: NextPage = () => {
           required
         />
         <div>
-          <Textarea label="Description" />
+          <Textarea name="create" label="Description" />
         </div>
         <Button text="Go live" />
       </form>

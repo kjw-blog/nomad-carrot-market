@@ -36,7 +36,7 @@ const Upload: NextPage = () => {
           required
         />
         <div>
-          <Textarea label="Description" />
+          <Textarea name="upload" label="Description" />
         </div>
         <Button text="Upload product" />
       </form>

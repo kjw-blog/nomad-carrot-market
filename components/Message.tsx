@@ -3,9 +3,10 @@ import { cls } from '../libs/utils';
 interface MessageProps {
   message: string;
   reverse?: boolean;
+  avatarUrl?: string;
 }
 
-export default function Message({ message, reverse }: MessageProps) {
+export default function Message({ message, reverse, avatarUrl }: MessageProps) {
   return (
     <div
       className={cls(
