@@ -8,7 +8,7 @@ const Home: NextPage = () => {
     <Layout title="홈" hasTabBar>
       <div className="flex flex-col space-y-5 py-10">
         {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
-          <Link href={`/chats/${i}`} key={i}>
+          <Link href={`/items/${i}`} key={i}>
             <a className="flex px-4 border-b pb-4 justify-between cursor-pointer">
               <div className="flex space-x-4">
                 <div className="w-20 h-20 bg-gray-300 rounded-md" />
