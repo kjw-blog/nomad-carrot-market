@@ -6,7 +6,7 @@ interface ButtonProps {
   [key: string]: any;
 }
 
-export default function Button({ text, small, ...rest }: ButtonProps) {
+export default function Button({ text, small, onClick, ...rest }: ButtonProps) {
   return (
     <button
       {...rest}
