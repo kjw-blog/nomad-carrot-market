@@ -6,7 +6,7 @@ import Layout from '../components/Layout';
 const Home: NextPage = () => {
   return (
     <Layout title="홈" hasTabBar>
-      <div className="flex flex-col space-y-5 pt-10 pb-5">
+      <div className="flex flex-col space-y-5 py-10">
         {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
           <Link href={`/chats/${i}`} key={i}>
             <a className="flex px-4 border-b pb-4 justify-between cursor-pointer">

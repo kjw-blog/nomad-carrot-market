@@ -9,7 +9,7 @@ const Community: NextPage = () => {
 
   return (
     <Layout title="동네생활" hasTabBar>
-      <div className="pt-10 pb-2 space-y-8">
+      <div className="py-10  space-y-8">
         {[1, 2, 3, 4, 5, 6].map((_, i) => (
           <Link href={`/community/${i}`} key={i}>
             <a className="flex flex-col items-start cursor-pointer px-4">
