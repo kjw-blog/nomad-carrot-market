@@ -1,62 +1,31 @@
-import React, { useState } from 'react';
+// == 원하는 수정 목록 ==
+// 코드 간소화 (O)
+// 더 나은 validation
+// 더 나은 에러 처리 (set, clear, display)
+// input 태그에 대한 컨트롤
+// event에 대한 신경줄이기 ?
+// input 태그 간소화 (O)
+
+import { useForm } from 'react-hook-form';
 
 export default function Form() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [formErrors, setFormErrors] = useState('');
-  const [emailErrors, setEmailErrors] = useState('');
-
-  const onUsernameChange = (event: React.SyntheticEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { value },
-    } = event;
-    setUsername(value);
-  };
-  const onEmailChange = (event: React.SyntheticEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { value },
-    } = event;
-    setEmail(value);
-    setEmailErrors('');
-  };
-  const onPasswordChange = (event: React.SyntheticEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { value },
-    } = event;
-    setPassword(value);
-  };
-
-  const onSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (email === '' || username === '' || password === '') {
-      setFormErrors('모든 입력창은 입력이 되어야합니다.');
-    }
-    if (!email.includes('@')) {
-      setEmailErrors('이메일 형식에 맞게 입력해주세요.');
-    }
-  };
+  const { register, watch } = useForm();
+  /**
+   *  register  : input 과 state를 연결해주는 다리역할
+   *  watch     : form 안에 있는 value를 볼 수 있게함
+   */
 
   return (
-    <form onSubmit={onSubmit}>
+    <form>
       <input
-        value={username}
-        onChange={onUsernameChange}
+        {...register('username')}
         type="text"
         placeholder="Username"
         required
       />
+      <input {...register('email')} type="email" placeholder="Email" required />
       <input
-        value={email}
-        onChange={onEmailChange}
-        type="email"
-        placeholder="Email"
-        required
-      />
-      {emailErrors}
-      <input
-        value={password}
-        onChange={onPasswordChange}
+        {...register('password')}
         type="password"
         placeholder="Password"
         required
