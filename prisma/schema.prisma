@@ -14,7 +14,7 @@ generator client {
 
 // model B {
 //  id : 1 , name : test1
-//  id : 5 , name : test5  << 있을 때 성공 , 없으면 오류 발생되는거같음
+//  id : 5 , name : test5  << model A 에서 호출한 id 5 가 있을 때 성공 , 없으면 오류 발생되는거같음
 // }
 
 datasource db {
