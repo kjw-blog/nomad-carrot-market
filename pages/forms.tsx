@@ -1,11 +1,3 @@
-// == 원하는 수정 목록 ==
-// 코드 간소화 (O)
-// 더 나은 validation  (o)
-// 더 나은 에러 처리 (set, clear, display)
-// input 태그에 대한 컨트롤
-// event에 대한 신경줄이기 ?
-// input 태그 간소화 (O)
-
 import { FieldErrors, useForm } from 'react-hook-form';
 
 interface LoginForm {
@@ -15,7 +7,13 @@ interface LoginForm {
 }
 
 export default function Form() {
-  const { register, handleSubmit } = useForm<LoginForm>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>({
+    mode: 'onChange',
+  });
   /**
    *  register  : input 과 state를 연결해주는 다리역할
    *  watch     : form 안에 있는 value를 볼 수 있게함
@@ -27,6 +25,8 @@ export default function Form() {
   const onInvalid = (errors: FieldErrors) => {
     console.log(errors);
   };
+
+  console.log(errors);
 
   return (
     <form onSubmit={handleSubmit(onValid, onInvalid)}>
@@ -41,17 +41,31 @@ export default function Form() {
         type="text"
         placeholder="Username"
       />
+      {errors.username?.message}
       <input
-        {...register('email', { required: 'Email is required' })}
+        {...register('email', {
+          required: 'Email is required',
+          validate: {
+            notGmail: (value) =>
+              !value.includes('@gmail.com') || 'gmail은 사용 불가능 합니다.',
+          },
+        })}
         type="email"
         placeholder="Email"
+        className={`${
+          Boolean(errors.email?.message)
+            ? 'border-red-500 ring-2 ring-red-500 '
+            : ''
+        }`}
       />
+      {errors.email?.message}
       <input
         {...register('password', { required: 'Password is required' })}
         type="password"
         placeholder="Password"
       />
       <input type="submit" value={'Create Account'} />
+      {errors.password?.message}
     </form>
   );
 }
