@@ -1,12 +1,30 @@
 import { useState } from 'react';
+import { FieldErrors, useForm } from 'react-hook-form';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { cls } from '../libs/utils';
 
+interface EnterForm {
+  email?: string;
+  phone?: string;
+}
+
 export default function Enter() {
+  const { register, handleSubmit, reset } = useForm<EnterForm>();
   const [method, setMethod] = useState<'email' | 'phone'>('email');
-  const onEmailClick = () => setMethod('email');
-  const onPhoneClick = () => setMethod('phone');
+  const onEmailClick = () => {
+    reset();
+    setMethod('email');
+  };
+  const onPhoneClick = () => {
+    reset();
+    setMethod('phone');
+  };
+
+  const onValid = (data: EnterForm) => {
+    console.log(data);
+  };
+  const onInvalid = (errors: FieldErrors) => {};
 
   return (
     <div className="mt-16 px-4">
@@ -39,10 +57,11 @@ export default function Enter() {
             </button>
           </div>
         </div>
-        <form className="flex flex-col mt-8">
+        <form onSubmit={handleSubmit(onValid)} className="flex flex-col mt-8">
           {method === 'email' && (
             <>
               <Input
+                register={register('email')}
                 label="Email address"
                 kind="text"
                 inputId="email"
@@ -55,6 +74,7 @@ export default function Enter() {
           {method === 'phone' && (
             <>
               <Input
+                register={register('phone')}
                 label="Phone number"
                 kind="phone"
                 inputId="phone"
