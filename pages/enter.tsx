@@ -11,6 +11,7 @@ interface EnterForm {
 
 export default function Enter() {
   const { register, handleSubmit, reset } = useForm<EnterForm>();
+  const [submitting, setSubmitting] = useState(false);
   const [method, setMethod] = useState<'email' | 'phone'>('email');
   const onEmailClick = () => {
     reset();
@@ -22,7 +23,14 @@ export default function Enter() {
   };
 
   const onValid = (data: EnterForm) => {
-    console.log(data);
+    setSubmitting(true);
+    fetch('/api/users/enter', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(() => setSubmitting(false));
   };
   const onInvalid = (errors: FieldErrors) => {};
 
@@ -68,7 +76,7 @@ export default function Enter() {
                 type="text"
                 required
               />
-              <Button text="Get login link" />
+              <Button text={submitting ? 'Loading' : 'Get login link'} />
             </>
           )}
           {method === 'phone' && (
@@ -81,7 +89,7 @@ export default function Enter() {
                 type="number"
                 required
               />
-              <Button text="Get one-time password" />
+              <Button text={submitting ? 'Loading' : 'Get one-time password'} />
             </>
           )}
         </form>
