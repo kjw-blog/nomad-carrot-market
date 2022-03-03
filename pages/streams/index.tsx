@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import CreateButton from '../../components/CreateButton';
+import CreateButton from '@components/CreateButton';
 
-import Layout from '../../components/Layout';
+import Layout from '@components/Layout';
 
 const Streams: NextPage = () => {
   return (

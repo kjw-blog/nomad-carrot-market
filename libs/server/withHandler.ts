@@ -1,4 +1,5 @@
 // api 호출 시 발생하는 오류를 처리해주는 함수
+// children이랑 비슷한거같다
 
 import { NextApiRequest, NextApiResponse } from 'next';
 
