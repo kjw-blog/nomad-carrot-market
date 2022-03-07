@@ -11,3 +11,5 @@
 # pages/폴더/index.tsx : http://localhost:3000/폴더 로 route가 지정된다.
 
 # pages/api 폴더에서 api를 만들 수 있다.
+
+# 22-03-07 twilio 설정 env 변수 명, 사이트에서 받아온 token값을 둘다 잘못적어서 오류났었음..
