@@ -3,6 +3,14 @@ import client from '@libs/server/client';
 import withHandler, { ResponseType } from '@libs/server/withHandler';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+declare module 'iron-session' {
+  interface IronSessionData {
+    user?: {
+      id: number;
+    };
+  }
+}
+
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
@@ -13,9 +21,9 @@ async function handler(
     // include: { user: true },
     // include 로 해당 model에 관련된 model의 data를 가져올수있다
   });
-  if (!exists) res.status(404).end();
+  if (!exists) return res.status(404).end();
   req.session.user = {
-    id: exists?.userId,
+    id: exists.userId,
   };
   // userId로 세션을 만든다
 
