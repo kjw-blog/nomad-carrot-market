@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { FieldErrors, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Button from '@components/Button';
 import Input from '@components/Input';
 import useMutation from '@libs/client/useMutation';
 import { cls } from '@libs/client/utils';
+import { useRouter } from 'next/router';
 
 interface EnterForm {
   email?: string;
@@ -19,6 +20,8 @@ interface TokenForm {
 }
 
 export default function Enter() {
+  const router = useRouter();
+
   const [enter, { loading, data, error }] =
     useMutation<MutationResult>('/api/users/enter');
   const [confirmToken, { loading: tokenLoading, data: tokenData }] =
@@ -44,6 +47,12 @@ export default function Enter() {
     if (tokenLoading) return;
     confirmToken(validForm);
   };
+
+  useEffect(() => {
+    if (tokenData?.ok) {
+      router.push('/');
+    }
+  }, [tokenData, router]);
 
   return (
     <div className="mt-16 px-4">

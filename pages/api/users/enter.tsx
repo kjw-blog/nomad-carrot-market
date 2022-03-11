@@ -13,7 +13,7 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const { phone, email } = req.body;
-  const user = phone ? { phone: +phone } : email ? { email } : null;
+  const user = phone ? { phone } : email ? { email } : null;
   if (!user) return res.status(400).json({ ok: false });
   const payload = Math.floor(100000 + Math.random() * 900000) + '';
 
@@ -56,5 +56,15 @@ async function handler(
 
   return res.json({ ok: true });
 }
-
 export default withHandler('POST', handler);
+
+/**
+ * 동작순서
+ * 1. 클라이언트에게 phone또는 email을 받아와서 user 변수에 저장한다.
+ * 2. 만약 phone 과 email을 모두 못받아왔으면 함수실행을 종료한다.
+ * 3. 6자리의 랜덤한 수로 토큰을 만들어준다.
+ * 4. 받아온 user 데이터와 만들어둔 랜덤수 토큰으로 토큰데이터를 생성한다.
+ *    이때 user변수값으로 user테이블을 조회해서 데이터가 있으면 값을 가져오고 없으면 생성해준다. (connectOrCreate)
+ * 5. 클라이언트에서 받아온 값에 따라 사용자에게 토큰을 전송한다.
+ * 6. 클라이언트에 ok:true를 보내준다.
+ */
