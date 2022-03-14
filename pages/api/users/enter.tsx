@@ -56,7 +56,10 @@ async function handler(
 
   return res.json({ ok: true });
 }
-export default withHandler('POST', handler);
+export default withHandler({
+  method: 'POST',
+  handler,
+});
 
 /**
  * 동작순서

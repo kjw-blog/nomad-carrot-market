@@ -18,10 +18,8 @@ async function handler(
   req.session.user = {
     id: foundToken.userId,
   };
-  // userId로 세션을 만든다
 
   await req.session.save();
-  // 해당 세션을 저장한다
 
   await client.token.deleteMany({
     where: {
@@ -32,7 +30,13 @@ async function handler(
   res.json({ ok: true });
 }
 
-export default withApiSession(withHandler('POST', handler));
+export default withApiSession(
+  withHandler({
+    method: 'POST',
+    handler,
+    isPrivate: false,
+  })
+);
 
 /**
  * 동작 순서
