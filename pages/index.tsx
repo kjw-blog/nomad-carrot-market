@@ -3,8 +3,13 @@ import Link from 'next/link';
 import CreateButton from '@components/CreateButton';
 import Item from '@components/Item';
 import Layout from '@components/Layout';
+import useUser from '@libs/client/useUser';
 
 const Home: NextPage = () => {
+  const user = useUser();
+
+  console.log(user);
+
   return (
     <Layout title="홈" hasTabBar>
       <div className="flex flex-col space-y-5 py-10">
