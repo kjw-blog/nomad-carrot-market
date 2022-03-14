@@ -6,7 +6,7 @@ import Layout from '@components/Layout';
 import useUser from '@libs/client/useUser';
 
 const Home: NextPage = () => {
-  const user = useUser();
+  const { user, isLoading } = useUser();
 
   console.log(user);
 

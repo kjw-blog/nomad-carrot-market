@@ -1,24 +1,34 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 
 export default function useUser() {
-  const [user, setUser] = useState();
+  const { data, error } = useSWR('/api/users/me');
   const router = useRouter();
-  useEffect(() => {
-    fetch(`/api/users/me`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data.ok) {
-          return router.replace('/enter');
-        }
-        setUser(data.profile);
-      });
-  }, [router]);
 
-  return user;
+  useEffect(() => {
+    if (data && !data.ok) {
+      router.replace('/enter');
+    }
+  }, [data, router]);
+
+  return { user: data?.profile, isLoading: !data && !error };
 }
 
 /**
+ *
+ * swr 사용 방법
+ * useSWR(1 , 2)
+ * 1에는 호출할 api url(key)를 2에는 해당 url으로 fetch할 함수를 넣는다
+ *
+ * swr의 super_cache 에
+ * super_cache = {
+ *      url : {
+ *          받아온 data
+ *      }
+ * }
+ * 형식으로 저장된다.
+ *
  * replace 와 push 의 차이
  *
  * replace : 화면 자체를 변경해준다? 뒤로가기 같은것을 방지할 수 있음. 브라우저 히스토리에 남기지 않음.
