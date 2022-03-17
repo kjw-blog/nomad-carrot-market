@@ -5,22 +5,22 @@ import Link from 'next/link';
 const Profile: NextPage = () => {
   return (
     <Layout title="나의 캐럿" hasTabBar>
-      <div className="py-10 px-4">
+      <div className="px-4 py-10">
         <div className="flex items-center space-x-4">
-          <div className="w-16 h-16 bg-slate-400 rounded-full" />
+          <div className="bg-slate-400 w-16 h-16 rounded-full" />
           <div className="flex flex-col">
             <span className="font-semibold text-gray-900">Steve Jebs</span>
             <Link href="/profile/edit">
-              <a className="cursor-pointer text-sm text-gray-700">
+              <a className="text-sm text-gray-700 cursor-pointer">
                 Edit profile &rarr;
               </a>
             </Link>
           </div>
         </div>
-        <div className="mt-10 flex justify-around">
+        <div className="flex justify-around mt-10">
           <Link href="/profile/sold">
-            <a className="flex flex-col items-center cursor-pointer group">
-              <div className="w-14 h-14 transition-colors bg-orange-500 group-hover:bg-orange-600 text-white flex items-center justify-center rounded-full">
+            <a className="group flex flex-col items-center cursor-pointer">
+              <div className="w-14 h-14 group-hover:bg-orange-600 flex items-center justify-center text-white transition-colors bg-orange-500 rounded-full">
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -36,14 +36,14 @@ const Profile: NextPage = () => {
                   ></path>
                 </svg>
               </div>
-              <span className="text-sm font-semibold text-gray-700 mt-2">
+              <span className="mt-2 text-sm font-semibold text-gray-700">
                 판매내역
               </span>
             </a>
           </Link>
           <Link href="/profile/bought">
-            <a className="flex flex-col items-center cursor-pointer group">
-              <div className="w-14 h-14 transition-colors bg-orange-500 group-hover:bg-orange-600 text-white flex items-center justify-center rounded-full">
+            <a className="group flex flex-col items-center cursor-pointer">
+              <div className="w-14 h-14 group-hover:bg-orange-600 flex items-center justify-center text-white transition-colors bg-orange-500 rounded-full">
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -59,14 +59,14 @@ const Profile: NextPage = () => {
                   ></path>
                 </svg>
               </div>
-              <span className="text-sm font-semibold text-gray-700 mt-2">
+              <span className="mt-2 text-sm font-semibold text-gray-700">
                 구매내역
               </span>
             </a>
           </Link>
           <Link href="/profile/loved">
-            <a className="flex flex-col items-center cursor-pointer group">
-              <div className="w-14 h-14 transition-colors bg-orange-500 group-hover:bg-orange-600 text-white flex items-center justify-center rounded-full">
+            <a className="group flex flex-col items-center cursor-pointer">
+              <div className="w-14 h-14 group-hover:bg-orange-600 flex items-center justify-center text-white transition-colors bg-orange-500 rounded-full">
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -82,20 +82,20 @@ const Profile: NextPage = () => {
                   ></path>
                 </svg>
               </div>
-              <span className="text-sm font-semibold text-gray-700 mt-2">
+              <span className="mt-2 text-sm font-semibold text-gray-700">
                 관심목록
               </span>
             </a>
           </Link>
         </div>
         <div className="mt-12">
-          <div className="flex space-x-4 items-center">
-            <div className="w-12 h-12 bg-slate-400 rounded-full" />
+          <div className="flex items-center space-x-4">
+            <div className="bg-slate-400 w-12 h-12 rounded-full" />
             <div>
               <h4 className="text-sm font-semibold text-gray-700">니꼬</h4>
               <div className="flex items-center justify-center">
                 <svg
-                  className="text-yellow-400 h-5 w-5"
+                  className="w-5 h-5 text-yellow-400"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -104,7 +104,7 @@ const Profile: NextPage = () => {
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
                 <svg
-                  className="text-yellow-400 h-5 w-5"
+                  className="w-5 h-5 text-yellow-400"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -113,7 +113,7 @@ const Profile: NextPage = () => {
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
                 <svg
-                  className="text-yellow-400 h-5 w-5"
+                  className="w-5 h-5 text-yellow-400"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -122,7 +122,7 @@ const Profile: NextPage = () => {
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
                 <svg
-                  className="text-yellow-400 h-5 w-5"
+                  className="w-5 h-5 text-yellow-400"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -131,7 +131,7 @@ const Profile: NextPage = () => {
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
                 <svg
-                  className="text-gray-400 h-5 w-5"
+                  className="w-5 h-5 text-gray-400"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -142,7 +142,7 @@ const Profile: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="mt-4 text-gray-600 text-sm">
+          <div className="mt-4 text-sm text-gray-600">
             <p>
               Normally, both your asses would be dead as fucking fried chicken,
               but you happen to pull this shit while I&apos;m in a transitional

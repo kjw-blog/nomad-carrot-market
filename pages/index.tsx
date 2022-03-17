@@ -8,11 +8,11 @@ import useUser from '@libs/client/useUser';
 const Home: NextPage = () => {
   const { user, isLoading } = useUser();
 
-  console.log(user);
+  console.log(process.env.NODE_ENV);
 
   return (
     <Layout title="홈" hasTabBar>
-      <div className="flex flex-col space-y-5 py-10">
+      <div className="flex flex-col py-10 space-y-5">
         {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
           <Item
             item="iPhone 10"
@@ -24,9 +24,9 @@ const Home: NextPage = () => {
             key={i}
           />
         ))}
-        <CreateButton href="/items/upload">
+        <CreateButton href="/products/upload">
           <svg
-            className="h-6 w-6"
+            className="w-6 h-6"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"

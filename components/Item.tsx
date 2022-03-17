@@ -18,8 +18,8 @@ export default function Item({
   id,
 }: ItemProps) {
   return (
-    <Link href={`/items/${id}`}>
-      <a className="flex px-4 border-b pb-4 justify-between cursor-pointer">
+    <Link href={`/products/${id}`}>
+      <a className="flex justify-between px-4 pb-4 border-b cursor-pointer">
         <div className="flex space-x-4">
           <div className="w-20 h-20 bg-gray-300 rounded-md" />
           <div className="flex flex-col pt-2">
@@ -27,7 +27,7 @@ export default function Item({
             {item_detail && (
               <span className="text-xs text-gray-500">{item_detail}</span>
             )}
-            <span className="font-semibold mt-1 text-gray-900">{`$${price}`}</span>
+            <span className="mt-1 font-semibold text-gray-900">{`$${price}`}</span>
           </div>
         </div>
         <div className="flex items-end justify-end space-x-2">
