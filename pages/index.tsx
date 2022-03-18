@@ -8,8 +8,6 @@ import useUser from '@libs/client/useUser';
 const Home: NextPage = () => {
   const { user, isLoading } = useUser();
 
-  console.log(process.env.NODE_ENV);
-
   return (
     <Layout title="홈" hasTabBar>
       <div className="flex flex-col py-10 space-y-5">

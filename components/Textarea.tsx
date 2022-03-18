@@ -1,24 +1,33 @@
+import { UseFormRegisterReturn } from 'react-hook-form';
+
 interface TextareaProps {
   label?: string;
   name?: string;
+  register: UseFormRegisterReturn;
   [key: string]: any;
 }
 
-export default function Textarea({ label, name, ...rest }: TextareaProps) {
+export default function Textarea({
+  label,
+  name,
+  register,
+  ...rest
+}: TextareaProps) {
   return (
     <>
       {label && (
         <label
           htmlFor={name}
-          className="mb-1 block text-sm text-gray-700 font-semibold"
+          className="block mb-1 text-sm font-semibold text-gray-700"
         >
           {label}
         </label>
       )}
       <textarea
+        {...register}
         {...rest}
         id={name}
-        className="mt-1 shadow-sm w-full transition focus:ring-orange-500 rounded-md border-gray-300 focus:border-orange-500"
+        className="focus:ring-orange-500 focus:border-orange-500 w-full mt-1 transition border-gray-300 rounded-md shadow-sm"
         rows={4}
       />
     </>

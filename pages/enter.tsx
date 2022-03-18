@@ -41,6 +41,7 @@ export default function Enter() {
   };
 
   const onValid = (validForm: EnterForm) => {
+    if (loading) return;
     enter(validForm);
   };
   const onTokenValid = (validForm: TokenForm) => {
