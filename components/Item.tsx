@@ -24,10 +24,7 @@ export default function Item({
           <div className="w-20 h-20 bg-gray-300 rounded-md" />
           <div className="flex flex-col pt-2">
             <h3 className="text-sm font-semibold text-gray-900">{item}</h3>
-            {item_detail && (
-              <span className="text-xs text-gray-500">{item_detail}</span>
-            )}
-            <span className="mt-1 font-semibold text-gray-900">{`$${price}`}</span>
+            <span className="mt-6 font-semibold text-gray-900">{`${price} \\`}</span>
           </div>
         </div>
         <div className="flex items-end justify-end space-x-2">

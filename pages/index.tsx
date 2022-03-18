@@ -4,22 +4,29 @@ import CreateButton from '@components/CreateButton';
 import Item from '@components/Item';
 import Layout from '@components/Layout';
 import useUser from '@libs/client/useUser';
+import useSWR from 'swr';
+import { Product } from '@prisma/client';
+
+interface ProductsReponse {
+  ok: boolean;
+  products: Product[];
+}
 
 const Home: NextPage = () => {
   const { user, isLoading } = useUser();
+  const { data } = useSWR<ProductsReponse>('/api/products');
 
   return (
     <Layout title="홈" hasTabBar>
       <div className="flex flex-col py-10 space-y-5">
-        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
+        {data?.products?.map((product) => (
           <Item
-            item="iPhone 10"
+            item={product.name}
             comments={1}
             hearts={1}
-            id={i}
-            item_detail="Black"
-            price={9500}
-            key={i}
+            id={product.id}
+            price={product.price}
+            key={product.id}
           />
         ))}
         <CreateButton href="/products/upload">

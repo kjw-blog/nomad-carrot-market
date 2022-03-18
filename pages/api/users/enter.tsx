@@ -57,7 +57,7 @@ async function handler(
   return res.json({ ok: true });
 }
 export default withHandler({
-  method: 'POST',
+  methods: ['POST'],
   handler,
   isPrivate: false,
 });
