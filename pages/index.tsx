@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import Link from 'next/link';
 import CreateButton from '@components/CreateButton';
 import Item from '@components/Item';
 import Layout from '@components/Layout';
@@ -21,12 +20,12 @@ const Home: NextPage = () => {
       <div className="flex flex-col py-10 space-y-5">
         {data?.products?.map((product) => (
           <Item
+            id={product.id}
+            key={product.id}
             item={product.name}
+            price={product.price}
             comments={1}
             hearts={1}
-            id={product.id}
-            price={product.price}
-            key={product.id}
           />
         ))}
         <CreateButton href="/products/upload">

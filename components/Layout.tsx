@@ -36,7 +36,7 @@ export default function Layout({
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -56,11 +56,11 @@ export default function Layout({
         {children}
       </div>
       {hasTabBar ? (
-        <nav className="bg-white text-gray-900 font-semibold px-10 max-w-lg w-full border-t fixed bottom-0 pb-5 pt-3 flex justify-between text-xs">
+        <nav className="fixed bottom-0 flex justify-between w-full max-w-lg px-10 pt-3 pb-5 text-xs font-semibold text-gray-900 bg-white border-t">
           <NavLink href="/" text="홈">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -76,7 +76,7 @@ export default function Layout({
           <NavLink href="/community" text="동네생활">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -92,7 +92,7 @@ export default function Layout({
           <NavLink href="/chats" text="채팅">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -108,7 +108,7 @@ export default function Layout({
           <NavLink href="/streams" text="라이브">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -124,7 +124,7 @@ export default function Layout({
           <NavLink href="/profile" text="나의 캐럿">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

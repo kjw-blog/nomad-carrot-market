@@ -1,43 +1,60 @@
 import type { NextPage } from 'next';
 import Button from '@components/Button';
 import Layout from '@components/Layout';
+import { useRouter } from 'next/router';
+import useSWR from 'swr';
+import { Product } from '@prisma/client';
+import Link from 'next/link';
 
 const ItemDetail: NextPage = () => {
+  const router = useRouter();
+
+  const { data, error } = useSWR(
+    router.query.id ? `/api/products/${router.query.id}` : null
+  );
+
   return (
     <Layout canGoBack>
       <div className="px-4 py-10">
         <div className="mb-8">
           <div className="h-96 bg-slate-300" />
-          <div className="cursor-pointer flex space-x-3 items-center py-3 border-t border-b">
-            <div className="h-12 w-12 bg-slate-300 rounded-full" />
+          <div className="flex items-center py-3 space-x-3 border-t border-b cursor-pointer">
+            <div className="bg-slate-300 w-12 h-12 rounded-full" />
             <div>
-              <p className="text-sm font-semibold text-gray-700">Steve Jebs</p>
-              <p className="text-xs font-semibold text-gray-500">
-                View profile &rarr;
+              <p className="text-sm font-semibold text-gray-700">
+                {data?.product?.user?.name}
               </p>
+              <Link href={`/users/profiles/${data?.product?.user?.id}`}>
+                <a className="text-xs font-semibold text-gray-500">
+                  View profile &rarr;
+                </a>
+              </Link>
             </div>
           </div>
           <div className="mt-5">
-            <h1 className="text-3xl font-bold text-gray-900">Galaxy S50</h1>
-            <span className="text-3xl text-gray-900 mt-3 block">$140</span>
-            <p className="text-base text-gray-700 my-6">
-              My money&apos;s in that office, right? If she start giving me some
-              bullshit about it ain&apos;t there, and we got to go someplace
-              else and get it, I&apos;m gonna shoot you in the head then and
-              there. Then I&apos;m gonna shoot that bitch in the kneecaps, find
-              out where my goddamn money is. She gonna tell me too. Hey, look at
-              me when I&apos;m talking to you, motherfucker. You listen: we go
-              in there, and that ni**a Winston or anybody else is in there, you
-              the first motherfucker to get shot. You understand?
-            </p>
+            {!data && !error ? (
+              <h1 className="my-10 font-bold text-center text-gray-700">
+                Loading...
+              </h1>
+            ) : (
+              <>
+                <h1 className="text-3xl font-bold text-gray-900">
+                  {data?.product?.name}
+                </h1>
+                <span className="block mt-3 text-3xl text-gray-900">
+                  {data?.product?.price.toLocaleString()}원
+                </span>
+                <p className="my-6 text-base text-gray-700">
+                  {data?.product?.description}
+                </p>
+              </>
+            )}
+
             <div className="flex items-center justify-between space-x-2">
               <Button text="Talk to seller" small />
-              {/* <button className="flex w-full justify-center bg-orange-500 text-white py-2 rounded-md font-semibold hover:bg-orange-600 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
-                Talk to seller
-              </button> */}
-              <button className="flex p-2 items-center justify-center text-gray-400 bg-gray-100 rounded-md hover:bg-gray-500 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200">
+              <button className="hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 flex items-center justify-center p-2 text-gray-400 transition bg-gray-100 rounded-md">
                 <svg
-                  className="h-6 w-6 "
+                  className=" w-6 h-6"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -62,8 +79,8 @@ const ItemDetail: NextPage = () => {
           <div className="grid grid-cols-2 gap-4 mt-6">
             {[1, 2, 3, 4, 5, 6].map((_, i) => (
               <div key={i}>
-                <div className="h-56 w-full mb-4 bg-slate-300" />
-                <h3 className="text-gray-700 -mb-1">Galaxy S60</h3>
+                <div className="bg-slate-300 w-full h-56 mb-4" />
+                <h3 className="-mb-1 text-gray-700">Galaxy S60</h3>
                 <span className="text-sm font-semibold text-gray-900">$6</span>
               </div>
             ))}
