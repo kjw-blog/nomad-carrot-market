@@ -2,11 +2,12 @@ import type { NextPage } from 'next';
 import Button from '@components/Button';
 import Layout from '@components/Layout';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { Product, User } from '@prisma/client';
 import Link from 'next/link';
 import useMutation from '@libs/client/useMutation';
 import { cls } from '@libs/client/utils';
+import useUser from '@libs/client/useUser';
 
 interface ProductWithUser extends Product {
   user: User;
@@ -21,16 +22,25 @@ interface ItemDetailResponse {
 
 const ItemDetail: NextPage = () => {
   const router = useRouter();
+  const { user } = useUser();
+  const { mutate } = useSWRConfig();
 
-  const { data, error, mutate } = useSWR<ItemDetailResponse>(
+  const {
+    data,
+    error,
+    mutate: boundMutate,
+  } = useSWR<ItemDetailResponse>(
     router.query.id ? `/api/products/${router.query.id}` : null
   );
   const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
 
   const onFavClick = () => {
-    toggleFav({});
     if (!data) return;
-    mutate({ ...data, isLiked: !data.isLiked }, false);
+    boundMutate((prev) => prev && { ...prev, isLiked: !prev.isLiked }, false);
+    toggleFav({});
+    // mutate('/api/users/me', (prev: any) => ({ ok: !prev.ok }), false);
+    // useSWRConfig에서 가져온 mutate함수로 (key(바꿀 swr의 url) /  변경할 data / 다시 swr을 호출할지 여부)를 파라미터로 줘서 사용할 수 있다.
+    // mutate함수에 파라미터로 key 만 넘겨주게 되면 단순 refresh만 하게된다.
   };
 
   return (
