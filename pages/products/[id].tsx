@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { Product, User } from '@prisma/client';
 import Link from 'next/link';
+import useMutation from '@libs/client/useMutation';
+import { cls } from '@libs/client/utils';
 
 interface ProductWithUser extends Product {
   user: User;
@@ -13,15 +15,22 @@ interface ProductWithUser extends Product {
 interface ItemDetailResponse {
   ok: boolean;
   product: ProductWithUser;
+  isLiked: boolean;
   relatedProducts: Product[];
 }
 
 const ItemDetail: NextPage = () => {
   const router = useRouter();
 
-  const { data, error } = useSWR<ItemDetailResponse>(
+  const { data, error, mutate } = useSWR<ItemDetailResponse>(
     router.query.id ? `/api/products/${router.query.id}` : null
   );
+  const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
+  const onFavClick = () => {
+    toggleFav({});
+    if (!data) return;
+    mutate({ ...data, isLiked: !data.isLiked }, false);
+  };
 
   return (
     <Layout canGoBack>
@@ -52,7 +61,7 @@ const ItemDetail: NextPage = () => {
                   {data?.product?.name}
                 </h1>
                 <span className="block mt-3 text-3xl text-gray-900">
-                  {data?.product?.price.toLocaleString()}원
+                  {data?.product?.price?.toLocaleString()}원
                 </span>
                 <p className="my-6 text-base text-gray-700">
                   {data?.product?.description}
@@ -62,22 +71,48 @@ const ItemDetail: NextPage = () => {
 
             <div className="flex items-center justify-between space-x-2">
               <Button text="Talk to seller" small />
-              <button className="hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 flex items-center justify-center p-2 text-gray-400 transition bg-gray-100 rounded-md">
-                <svg
-                  className=" w-6 h-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
+              <button
+                onClick={onFavClick}
+                className={cls(
+                  'hover:bg-gray-100 flex items-center justify-center p-2  transition duration-300 rounded-md',
+                  data?.isLiked
+                    ? 'text-red-500 hover:text-red-600'
+                    : 'text-gray-400 hover:text-gray-500'
+                )}
+              >
+                {data?.isLiked ? (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                      />
+                    </svg>
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -87,7 +122,7 @@ const ItemDetail: NextPage = () => {
             Similar items
           </h2>
           <div className="grid grid-cols-2 gap-4 mt-6">
-            {data?.relatedProducts.map((product) => (
+            {data?.relatedProducts?.map((product) => (
               <Link href={`/products/${product.id}`} key={product.id}>
                 <a>
                   <div className="bg-slate-300 w-full h-56 mb-4" />

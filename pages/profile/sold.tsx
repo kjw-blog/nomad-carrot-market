@@ -4,8 +4,8 @@ import Layout from '@components/Layout';
 
 const Sold: NextPage = () => {
   return (
-    <Layout canGoBack>
-      <div className="flex flex-col space-y-5 py-10">
+    <Layout canGoBack title="판매내역">
+      <div className="flex flex-col py-10 space-y-5">
         {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
           <Item
             item="iPhone 10"
