@@ -26,6 +26,7 @@ const ItemDetail: NextPage = () => {
     router.query.id ? `/api/products/${router.query.id}` : null
   );
   const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
+
   const onFavClick = () => {
     toggleFav({});
     if (!data) return;
