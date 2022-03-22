@@ -7,6 +7,8 @@ import useSWR from 'swr';
 import { useEffect } from 'react';
 import { Answer, Post, User } from '@prisma/client';
 import Link from 'next/link';
+import useMutation from '@libs/client/useMutation';
+import { cls } from '@libs/client/utils';
 
 interface AnswerWithUser extends Answer {
   user: User;
@@ -24,13 +26,38 @@ interface PostWithUser extends Post {
 interface PostResponse {
   ok: boolean;
   post: PostWithUser;
+  isWonder: boolean;
 }
 
 const CommunityPostDetail: NextPage = () => {
   const router = useRouter();
-  const { data, error } = useSWR<PostResponse>(
+
+  const [wonder] = useMutation(`/api/posts/${router.query.id}/wonder`);
+
+  const { data, mutate } = useSWR<PostResponse>(
     router.query.id ? `/api/posts/${router.query.id}` : null
   );
+
+  const onWonderClick = () => {
+    if (!data) return;
+    const toggle = data.isWonder ? -1 : 1;
+    mutate(
+      {
+        ...data,
+        post: {
+          ...data.post,
+          _count: {
+            ...data.post._count,
+            wonderings: data.post._count.wonderings + toggle,
+          },
+        },
+        isWonder: !data.isWonder,
+      },
+      false
+    );
+
+    wonder({});
+  };
 
   useEffect(() => {
     if (data && !data.post) {
@@ -64,7 +91,13 @@ const CommunityPostDetail: NextPage = () => {
             {data?.post?.question}
           </div>
           <div className="flex px-4 space-x-5 mt-3 text-gray-700 text-sm py-2.5 border-t border-b-2 w-full">
-            <span className="flex items-center space-x-2">
+            <button
+              className={cls(
+                'flex items-center space-x-2 transition-colors duration-300',
+                data?.isWonder ? 'text-teal-600' : 'text-gray-700'
+              )}
+              onClick={onWonderClick}
+            >
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -80,7 +113,7 @@ const CommunityPostDetail: NextPage = () => {
                 ></path>
               </svg>
               <span>궁금해요 {data?.post?._count?.wonderings}</span>
-            </span>
+            </button>
             <span className="flex items-center space-x-2">
               <svg
                 className="w-4 h-4"

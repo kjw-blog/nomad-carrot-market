@@ -9,6 +9,7 @@ async function handler(
 ) {
   const {
     query: { id },
+    session: { user },
   } = req;
 
   const post = await client.post.findUnique({
@@ -44,8 +45,19 @@ async function handler(
       },
     },
   });
+  const isWonder = Boolean(
+    await client.wondering.findFirst({
+      where: {
+        postId: +id.toString(),
+        userId: user?.id,
+      },
+      select: {
+        id: true,
+      },
+    })
+  );
 
-  return res.status(200).json({ ok: true, post });
+  return res.status(200).json({ ok: true, post, isWonder });
 }
 
 export default withApiSession(
@@ -60,6 +72,7 @@ export default withApiSession(
  *
  * 1. request query에서 id를 가져온다.
  * 2. 가져온 id를 uniqueKey로 사용해서 게시글 데이터를 가져온다
- * 3. 해당 게시글을 작성한 유저와 답변 데이터, 답변 수, 궁금해요 수를 함께 가져온다.
- * 4. client에 해당 데이터를 post로 뿌려준다.
+ * 3. 해당 게시글을 작성한 유저와 답변 데이터, 답변 수, 궁금해요 수를 함께 가져 온다.
+ * 4. 해당 게시글의 id와 session user의 id로 궁금해요 여부를 boolean값으로 가져온다.
+ * 5. client에 해당 데이터를 post로 뿌려준다.
  */
