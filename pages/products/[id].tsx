@@ -7,6 +7,7 @@ import { Product, User } from '@prisma/client';
 import Link from 'next/link';
 import useMutation from '@libs/client/useMutation';
 import { cls } from '@libs/client/utils';
+import { useEffect } from 'react';
 // import useUser from '@libs/client/useUser';
 
 interface ProductWithUser extends Product {
@@ -42,6 +43,13 @@ const ItemDetail: NextPage = () => {
     // useSWRConfig에서 가져온 mutate함수로 (key(바꿀 swr의 url) /  변경할 data / 다시 swr을 호출할지 여부)를 파라미터로 줘서 사용할 수 있다.
     // mutate함수에 파라미터로 key 만 넘겨주게 되면 단순 refresh만 하게된다.
   };
+
+  useEffect(() => {
+    if (data && !data.product) {
+      alert('없는 상품입니다.');
+      router.replace('/');
+    }
+  }, [data, router]);
 
   return (
     <Layout canGoBack>
