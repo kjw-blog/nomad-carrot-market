@@ -4,11 +4,17 @@ import Item from '@components/Item';
 import Layout from '@components/Layout';
 import useUser from '@libs/client/useUser';
 import useSWR from 'swr';
-import { Product } from '@prisma/client';
+import { Fav, Product } from '@prisma/client';
+
+interface ProductWithCount extends Product {
+  _count: {
+    favs: number;
+  };
+}
 
 interface ProductsReponse {
   ok: boolean;
-  products: Product[];
+  products: ProductWithCount[];
 }
 
 const Home: NextPage = () => {
@@ -24,8 +30,7 @@ const Home: NextPage = () => {
             key={product.id}
             item={product.name}
             price={product.price}
-            comments={1}
-            hearts={1}
+            hearts={product._count.favs}
           />
         ))}
         <CreateButton href="/products/upload">

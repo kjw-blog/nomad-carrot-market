@@ -7,7 +7,7 @@ import { Product, User } from '@prisma/client';
 import Link from 'next/link';
 import useMutation from '@libs/client/useMutation';
 import { cls } from '@libs/client/utils';
-import useUser from '@libs/client/useUser';
+// import useUser from '@libs/client/useUser';
 
 interface ProductWithUser extends Product {
   user: User;
@@ -22,8 +22,8 @@ interface ItemDetailResponse {
 
 const ItemDetail: NextPage = () => {
   const router = useRouter();
-  const { user } = useUser();
-  const { mutate } = useSWRConfig();
+  // const { user } = useUser();
+  // const { mutate } = useSWRConfig();
 
   const {
     data,
