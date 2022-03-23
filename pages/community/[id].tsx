@@ -9,6 +9,7 @@ import { Answer, Post, User } from '@prisma/client';
 import Link from 'next/link';
 import useMutation from '@libs/client/useMutation';
 import { cls } from '@libs/client/utils';
+import { useForm } from 'react-hook-form';
 
 interface AnswerWithUser extends Answer {
   user: User;
@@ -28,15 +29,34 @@ interface PostResponse {
   post: PostWithUser;
   isWonder: boolean;
 }
+interface AnswerResponse {
+  ok: boolean;
+  answer: Answer;
+}
+
+interface AnswerForm {
+  answer: string;
+}
 
 const CommunityPostDetail: NextPage = () => {
   const router = useRouter();
 
-  const [wonder] = useMutation(`/api/posts/${router.query.id}/wonder`);
+  const [wonder, { loading }] = useMutation(
+    `/api/posts/${router.query.id}/wonder`
+  );
+  const [sendAnswer, { data: answerData, loading: answerLoading }] =
+    useMutation<AnswerResponse>(`/api/posts/${router.query.id}/answers`);
 
   const { data, mutate } = useSWR<PostResponse>(
     router.query.id ? `/api/posts/${router.query.id}` : null
   );
+
+  const { register, handleSubmit, reset } = useForm<AnswerForm>();
+
+  const onValid = (form: AnswerForm) => {
+    if (answerLoading) return;
+    sendAnswer(form);
+  };
 
   const onWonderClick = () => {
     if (!data) return;
@@ -55,8 +75,7 @@ const CommunityPostDetail: NextPage = () => {
       },
       false
     );
-
-    wonder({});
+    if (!loading) wonder({});
   };
 
   useEffect(() => {
@@ -65,6 +84,12 @@ const CommunityPostDetail: NextPage = () => {
       router.replace('/community');
     }
   }, [data, router]);
+
+  useEffect(() => {
+    if (answerData && answerData.ok) {
+      reset();
+    }
+  }, [answerData, reset]);
 
   return (
     <Layout canGoBack>
@@ -149,10 +174,17 @@ const CommunityPostDetail: NextPage = () => {
             </div>
           ))}
         </div>
-        <div className="px-4 mb-5">
-          <Textarea placeholder="Answer this question!" />
-          <Button text="Reply" />
-        </div>
+        <form onSubmit={handleSubmit(onValid)} className="px-4 mb-5">
+          <Textarea
+            register={register('answer', {
+              required: true,
+              minLength: { value: 5, message: '5글자 이상 입력해주세요.' },
+            })}
+            placeholder="Answer this question!"
+            required
+          />
+          <Button text={answerLoading ? 'Loading...' : 'Reply'} />
+        </form>
       </div>
     </Layout>
   );

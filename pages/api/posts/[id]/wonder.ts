@@ -12,6 +12,13 @@ async function handler(
     session: { user },
   } = req;
 
+  const post = await client.post.findUnique({
+    where: {
+      id: +id.toString(),
+    },
+  });
+  if (!post) return res.status(404).json({ ok: false, error: '404 Not Found' });
+
   const alreadyExists = await client.wondering.findFirst({
     where: {
       postId: +id.toString(),

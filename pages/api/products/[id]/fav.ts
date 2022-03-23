@@ -12,6 +12,15 @@ async function handler(
     session: { user },
   } = req;
 
+  const product = await client.product.findUnique({
+    where: {
+      id: +id.toString(),
+    },
+  });
+
+  if (!product)
+    return res.status(404).json({ ok: false, error: '404 Not Found' });
+
   const alreadyExists = await client.fav.findFirst({
     where: {
       productId: +id.toString(),

@@ -33,12 +33,14 @@ const ItemDetail: NextPage = () => {
   } = useSWR<ItemDetailResponse>(
     router.query.id ? `/api/products/${router.query.id}` : null
   );
-  const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
+  const [toggleFav, { loading }] = useMutation(
+    `/api/products/${router.query.id}/fav`
+  );
 
   const onFavClick = () => {
     if (!data) return;
     boundMutate((prev) => prev && { ...prev, isLiked: !prev.isLiked }, false);
-    toggleFav({});
+    if (!loading) toggleFav({});
     // mutate('/api/users/me', (prev: any) => ({ ok: !prev.ok }), false);
     // useSWRConfig에서 가져온 mutate함수로 (key(바꿀 swr의 url) /  변경할 data / 다시 swr을 호출할지 여부)를 파라미터로 줘서 사용할 수 있다.
     // mutate함수에 파라미터로 key 만 넘겨주게 되면 단순 refresh만 하게된다.

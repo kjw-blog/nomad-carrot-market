@@ -27,7 +27,7 @@ export default function Textarea({
         {...register}
         {...rest}
         id={name}
-        className="focus:ring-orange-500 focus:border-orange-500 w-full mt-1 transition border-gray-300 rounded-md shadow-sm"
+        className="focus:ring-orange-500 focus:border-orange-500 w-full mt-1 transition border-gray-300 rounded-md shadow-sm resize-none"
         rows={4}
       />
     </>
