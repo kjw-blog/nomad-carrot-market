@@ -88,8 +88,10 @@ const CommunityPostDetail: NextPage = () => {
   useEffect(() => {
     if (answerData && answerData.ok) {
       reset();
+      mutate();
+      // 해당 게시글의 데이터를 받아온 SWR과 연결된 mutate함수를 실행시켜서 re-fetch해준다.
     }
-  }, [answerData, reset]);
+  }, [answerData, reset, mutate]);
 
   return (
     <Layout canGoBack>
