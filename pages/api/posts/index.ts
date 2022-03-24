@@ -10,13 +10,15 @@ async function handler(
 ) {
   if (req.method === 'POST') {
     const {
-      body: { question },
+      body: { question, longitude, latitude },
       session: { user },
     } = req;
 
     const post = await client.post.create({
       data: {
         question,
+        longitude,
+        latitude,
         user: {
           connect: {
             id: user?.id,
@@ -63,7 +65,7 @@ export default withApiSession(
  * 1. request에서 받아온 method를 구분한다.
  *
  * POST ( 게시글(동네생활) 작성 )
- *  2. request에서 body의 question, session의 user 데이터를 가져온다.
+ *  2. request에서 body의 question,latitude,longitude, session의 user 데이터를 가져온다.
  *  3. 해당 값으로 post를 만들어준다.
  *  4. client에 post값을 전달해준다. (게시글 작성 후 해당 게시글 페이지로 바로 이동하기위해서)
  *

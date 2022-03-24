@@ -8,6 +8,7 @@ import useMutation from '@libs/client/useMutation';
 import { useEffect } from 'react';
 import { Post } from '@prisma/client';
 import { useRouter } from 'next/router';
+import useCoords from '@libs/client/useCoords';
 
 interface WriteForm {
   question: string;
@@ -20,13 +21,14 @@ interface WriteResponse {
 
 const Write: NextPage = () => {
   const router = useRouter();
+  const { latitude, longitude } = useCoords();
   const { register, handleSubmit } = useForm<WriteForm>();
   const [post, { loading, data }] = useMutation<WriteResponse>('/api/posts');
 
   const onValid = (formData: WriteForm) => {
     if (loading) return;
 
-    post(formData);
+    post({ ...formData, latitude, longitude });
   };
 
   useEffect(() => {
@@ -36,7 +38,7 @@ const Write: NextPage = () => {
   }, [data, router]);
 
   return (
-    <Layout canGoBack>
+    <Layout canGoBack title="글쓰기">
       <form onSubmit={handleSubmit(onValid)} className="px-4 py-10">
         <Textarea
           register={register('question', {
