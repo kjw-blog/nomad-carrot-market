@@ -105,6 +105,7 @@ model Wondering {
   updatedAt DateTime @updatedAt
 }
 
+// 한 모델에서 같은 모델을 2번이상 참조할 때 name으로 구분해준다.
 model Review {
   id           Int      @id @default(autoincrement())
   createdBy    User     @relation(name: "writtenReviews", fields: [createdById], references: [id], onDelete: Cascade)
@@ -114,6 +115,7 @@ model Review {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   review       String   @db.MediumText
+  score        Int      @default(1)
 }
 
 model Fav {
