@@ -1,12 +1,15 @@
-import '../styles/globals.css';
-import type { AppProps } from 'next/app';
-import { useEffect } from 'react';
-import { SWRConfig } from 'swr';
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import { useEffect } from "react";
+import { SWRConfig } from "swr";
+import useUser from "@libs/client/useUser";
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
-    document.body.className = 'scrollbar-hide';
+    document.body.className = "scrollbar-hide";
   });
+
+  const { user } = useUser();
 
   return (
     <SWRConfig
