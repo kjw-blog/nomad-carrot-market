@@ -1,10 +1,10 @@
-import type { NextPage } from 'next';
-import Link from 'next/link';
-import CreateButton from '@components/CreateButton';
-import Layout from '@components/Layout';
-import useSWR from 'swr';
-import { Post, User } from '@prisma/client';
-import useCoords from '@libs/client/useCoords';
+import type { NextPage } from "next";
+import Link from "next/link";
+import CreateButton from "@components/CreateButton";
+import Layout from "@components/Layout";
+import useSWR from "swr";
+import { Post, User } from "@prisma/client";
+import useCoords from "@libs/client/useCoords";
 
 interface PostsWithUser extends Post {
   user: User;

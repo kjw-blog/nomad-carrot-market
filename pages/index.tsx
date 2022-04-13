@@ -1,12 +1,12 @@
-import type { NextPage } from 'next';
-import CreateButton from '@components/CreateButton';
-import Item from '@components/Item';
-import Layout from '@components/Layout';
-import useUser from '@libs/client/useUser';
-import useSWR from 'swr';
-import { Fav, Product } from '@prisma/client';
+import type { NextPage } from "next";
+import CreateButton from "@components/CreateButton";
+import Item from "@components/Item";
+import Layout from "@components/Layout";
+import useUser from "@libs/client/useUser";
+import useSWR from "swr";
+import { Fav, Product } from "@prisma/client";
 
-interface ProductWithCount extends Product {
+export interface ProductWithCount extends Product {
   _count: {
     favs: number;
   };
@@ -19,7 +19,7 @@ interface ProductsReponse {
 
 const Home: NextPage = () => {
   const { user, isLoading } = useUser();
-  const { data } = useSWR<ProductsReponse>('/api/products');
+  const { data } = useSWR<ProductsReponse>("/api/products");
 
   return (
     <Layout title="홈" hasTabBar>

@@ -1,7 +1,7 @@
-import withHandler, { ResponseType } from '@libs/server/withHandler';
-import { withApiSession } from '@libs/server/withSession';
-import { NextApiRequest, NextApiResponse } from 'next';
-import client from '@libs/server/client';
+import withHandler, { ResponseType } from "@libs/server/withHandler";
+import { withApiSession } from "@libs/server/withSession";
+import { NextApiRequest, NextApiResponse } from "next";
+import client from "@libs/server/client";
 
 async function handler(
   req: NextApiRequest,
@@ -16,7 +16,15 @@ async function handler(
       userId: user?.id,
     },
     include: {
-      product: true,
+      product: {
+        include: {
+          _count: {
+            select: {
+              favs: true,
+            },
+          },
+        },
+      },
     },
   });
 
@@ -25,7 +33,7 @@ async function handler(
 
 export default withApiSession(
   withHandler({
-    methods: ['GET'],
+    methods: ["GET"],
     handler,
   })
 );
