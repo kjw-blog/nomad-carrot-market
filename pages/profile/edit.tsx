@@ -22,12 +22,17 @@ const EditProfile: NextPage = () => {
     formState: { errors },
   } = useForm<EditProfileForm>();
 
-  const onValid = (form: EditProfileForm) => {
-    if (!form.email && !form.phone) {
+  const onValid = ({ email, phone }: EditProfileForm) => {
+    if (!email && !phone) {
       setError("formErrors", {
         message: "이메일 혹은 전화번호 중 하나를 입력해주세요.",
       });
     }
+    const form: EditProfileForm = {};
+
+    if (email) form.email = email;
+    if (phone) form.phone = phone;
+
     console.log(form);
   };
 
