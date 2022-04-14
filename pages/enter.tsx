@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '@components/Button';
-import Input from '@components/Input';
-import useMutation from '@libs/client/useMutation';
-import { cls } from '@libs/client/utils';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import Button from "@components/Button";
+import Input from "@components/Input";
+import useMutation from "@libs/client/useMutation";
+import { cls } from "@libs/client/utils";
+import { useRouter } from "next/router";
 
 interface EnterForm {
   email?: string;
@@ -21,23 +21,24 @@ interface TokenForm {
 
 export default function Enter() {
   const router = useRouter();
+  console.log("test");
 
   const [enter, { loading, data, error }] =
-    useMutation<MutationResult>('/api/users/enter');
+    useMutation<MutationResult>("/api/users/enter");
   const [confirmToken, { loading: tokenLoading, data: tokenData }] =
-    useMutation<MutationResult>('/api/users/confirm');
+    useMutation<MutationResult>("/api/users/confirm");
   const { register, handleSubmit, reset } = useForm<EnterForm>();
   const { register: tokenRegister, handleSubmit: tokenHandleSubmit } =
     useForm<TokenForm>();
 
-  const [method, setMethod] = useState<'email' | 'phone'>('email');
+  const [method, setMethod] = useState<"email" | "phone">("email");
   const onEmailClick = () => {
     reset();
-    setMethod('email');
+    setMethod("email");
   };
   const onPhoneClick = () => {
     reset();
-    setMethod('phone');
+    setMethod("phone");
   };
 
   const onValid = (validForm: EnterForm) => {
@@ -51,7 +52,7 @@ export default function Enter() {
 
   useEffect(() => {
     if (tokenData?.ok) {
-      router.push('/');
+      router.push("/");
     }
   }, [tokenData, router]);
 
@@ -65,14 +66,14 @@ export default function Enter() {
             className="flex flex-col mt-8"
           >
             <Input
-              register={tokenRegister('token')}
+              register={tokenRegister("token")}
               label="Confirmation Token"
               kind="text"
               inputId="token"
               type="number"
               required
             />
-            <Button text={tokenLoading ? 'Loading...' : 'Confirm Token'} />
+            <Button text={tokenLoading ? "Loading..." : "Confirm Token"} />
           </form>
         ) : (
           <>
@@ -83,10 +84,10 @@ export default function Enter() {
               <div className="grid w-full grid-cols-2 mt-8 border-b">
                 <button
                   className={cls(
-                    'pb-4 font-semibold border-b-2 transition',
-                    method === 'email'
-                      ? ' text-orange-400  border-orange-500'
-                      : 'border-transparent text-gray-500'
+                    "pb-4 font-semibold border-b-2 transition",
+                    method === "email"
+                      ? " text-orange-400  border-orange-500"
+                      : "border-transparent text-gray-500"
                   )}
                   onClick={onEmailClick}
                 >
@@ -94,10 +95,10 @@ export default function Enter() {
                 </button>
                 <button
                   className={cls(
-                    'pb-4 font-semibold border-b-2 transition',
-                    method === 'phone'
-                      ? ' text-orange-400  border-orange-500'
-                      : 'border-transparent text-gray-500'
+                    "pb-4 font-semibold border-b-2 transition",
+                    method === "phone"
+                      ? " text-orange-400  border-orange-500"
+                      : "border-transparent text-gray-500"
                   )}
                   onClick={onPhoneClick}
                 >
@@ -109,23 +110,23 @@ export default function Enter() {
               onSubmit={handleSubmit(onValid)}
               className="flex flex-col mt-8"
             >
-              {method === 'email' && (
+              {method === "email" && (
                 <>
                   <Input
-                    register={register('email')}
+                    register={register("email")}
                     label="Email address"
                     kind="text"
                     inputId="email"
                     type="text"
                     required
                   />
-                  <Button text={loading ? 'Loading' : 'Get login link'} />
+                  <Button text={loading ? "Loading" : "Get login link"} />
                 </>
               )}
-              {method === 'phone' && (
+              {method === "phone" && (
                 <>
                   <Input
-                    register={register('phone')}
+                    register={register("phone")}
                     label="Phone number"
                     kind="phone"
                     inputId="phone"
@@ -133,7 +134,7 @@ export default function Enter() {
                     required
                   />
                   <Button
-                    text={loading ? 'Loading' : 'Get one-time password'}
+                    text={loading ? "Loading" : "Get one-time password"}
                   />
                 </>
               )}
