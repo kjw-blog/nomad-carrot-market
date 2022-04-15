@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
-import Button from '@components/Button';
-import Input from '@components/Input';
-import Layout from '@components/Layout';
-import Textarea from '@components/Textarea';
-import { useForm } from 'react-hook-form';
-import useMutation from '@libs/client/useMutation';
-import { useEffect } from 'react';
-import { Product } from '@prisma/client';
-import { useRouter } from 'next/router';
+import type { NextPage } from "next";
+import Button from "@components/Button";
+import Input from "@components/Input";
+import Layout from "@components/Layout";
+import Textarea from "@components/Textarea";
+import { useForm } from "react-hook-form";
+import useMutation from "@libs/client/useMutation";
+import { useEffect } from "react";
+import { Product } from "@prisma/client";
+import { useRouter } from "next/router";
 
 interface UploadProductForm {
   name: string;
@@ -25,7 +25,7 @@ const Upload: NextPage = () => {
 
   const { register, handleSubmit } = useForm<UploadProductForm>();
   const [uploadProduct, { loading, data }] =
-    useMutation<UploadProductMutation>('/api/products');
+    useMutation<UploadProductMutation>("/api/products");
 
   const onValid = (formData: UploadProductForm) => {
     if (loading) return;
@@ -61,7 +61,7 @@ const Upload: NextPage = () => {
           </label>
         </div>
         <Input
-          register={register('name', {
+          register={register("name", {
             required: true,
           })}
           inputId="name"
@@ -71,7 +71,7 @@ const Upload: NextPage = () => {
           required
         />
         <Input
-          register={register('price', {
+          register={register("price", {
             required: true,
           })}
           inputId="price"
@@ -82,7 +82,7 @@ const Upload: NextPage = () => {
         />
         <div>
           <Textarea
-            register={register('description', {
+            register={register("description", {
               required: true,
             })}
             name="description"
@@ -90,7 +90,7 @@ const Upload: NextPage = () => {
             required
           />
         </div>
-        <Button text={loading ? 'Loading...' : 'Upload product'} />
+        <Button loading={loading} text="Upload product" />
       </form>
     </Layout>
   );

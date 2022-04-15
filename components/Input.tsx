@@ -1,7 +1,7 @@
-import type { UseFormRegisterReturn } from 'react-hook-form';
+import type { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputProps {
-  kind: 'text' | 'phone' | 'price';
+  kind?: "text" | "phone" | "price";
   label: string;
   inputId: string;
   register: UseFormRegisterReturn;
@@ -10,7 +10,7 @@ interface InputProps {
 }
 
 export default function Input({
-  kind = 'text',
+  kind = "text",
   label,
   inputId,
   register,
@@ -23,7 +23,7 @@ export default function Input({
         {label}
       </label>
       <div className="relative items-center mt-1 rounded-md shadow-sm">
-        {kind === 'text' && (
+        {kind === "text" && (
           <input
             {...register}
             type={type}
@@ -32,7 +32,7 @@ export default function Input({
             className="focus:outline-none focus:ring-orange-500 focus:border-orange-500 w-full py-2 pr-12 placeholder-gray-400 transition border border-gray-300 rounded-md shadow-sm appearance-none"
           />
         )}
-        {kind === 'phone' && (
+        {kind === "phone" && (
           <div className="flex mt-1 rounded-md shadow-sm">
             <span className="rounded-l-md bg-gray-50 flex items-center justify-center px-3 text-sm text-gray-500 border border-r-0 border-gray-300 select-none">
               +82
@@ -46,7 +46,7 @@ export default function Input({
             />
           </div>
         )}
-        {kind === 'price' && (
+        {kind === "price" && (
           <div className="relative flex items-center rounded-md shadow-sm">
             <div className="absolute left-0 flex items-center justify-center pl-3 pointer-events-none">
               <span className=" text-sm text-gray-500">\</span>

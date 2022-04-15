@@ -14,13 +14,11 @@ export default function useUser() {
   const { data, error } = useSWR<ProfileResponse>("/api/users/me");
   const router = useRouter();
 
-  const isPublic = publicPages.includes(router.pathname);
-
   useEffect(() => {
-    if (data && !data.ok && isPublic) {
-      router.replace("/enter");
+    if (data && !data.ok) {
+      if (!publicPages.includes(router.pathname)) router.replace("/enter");
     }
-  }, [data, router, isPublic]);
+  }, [data, router]);
 
   return { user: data?.profile, isLoading: !data && !error, error };
 }

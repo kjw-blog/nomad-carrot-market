@@ -21,7 +21,6 @@ interface TokenForm {
 
 export default function Enter() {
   const router = useRouter();
-  console.log("test");
 
   const [enter, { loading, data, error }] =
     useMutation<MutationResult>("/api/users/enter");
@@ -51,7 +50,7 @@ export default function Enter() {
   };
 
   useEffect(() => {
-    if (tokenData?.ok) {
+    if (tokenData && tokenData?.ok) {
       router.push("/");
     }
   }, [tokenData, router]);
@@ -73,7 +72,7 @@ export default function Enter() {
               type="number"
               required
             />
-            <Button text={tokenLoading ? "Loading..." : "Confirm Token"} />
+            <Button loading={tokenLoading} text="Confirm Token" />
           </form>
         ) : (
           <>
@@ -120,7 +119,7 @@ export default function Enter() {
                     type="text"
                     required
                   />
-                  <Button text={loading ? "Loading" : "Get login link"} />
+                  <Button loading={loading} text="Get login link" />
                 </>
               )}
               {method === "phone" && (
@@ -133,9 +132,7 @@ export default function Enter() {
                     type="number"
                     required
                   />
-                  <Button
-                    text={loading ? "Loading" : "Get one-time password"}
-                  />
+                  <Button loading={loading} text="Get one-time password" />
                 </>
               )}
             </form>
