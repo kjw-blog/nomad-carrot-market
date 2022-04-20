@@ -8,6 +8,7 @@ import useMutation from '@libs/client/useMutation';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Stream } from '@prisma/client';
+import { listenerCount } from 'process';
 
 interface CreateForm {
   name: string;
@@ -27,6 +28,7 @@ const Create: NextPage = () => {
 
   const onValid = (form: CreateForm) => {
     if (loading) return;
+
     createStream(form);
   };
 
@@ -47,7 +49,7 @@ const Create: NextPage = () => {
           required
         />
         <Input
-          register={register('price', { required: true })}
+          register={register('price', { required: true, valueAsNumber: true })}
           inputId="price"
           kind="price"
           label="Price"

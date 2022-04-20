@@ -3,17 +3,26 @@ import Link from 'next/link';
 import CreateButton from '@components/CreateButton';
 
 import Layout from '@components/Layout';
+import useSWR from 'swr';
+import { Stream } from '@prisma/client';
+
+interface StreamsResponse {
+  ok: true;
+  streams: Stream[];
+}
 
 const Streams: NextPage = () => {
+  const { data } = useSWR<StreamsResponse>('/api/streams');
+
   return (
     <Layout title="라이브" hasTabBar>
-      <div className="pt-12 pb-16 divide-y-2 space-y-4">
-        {[1, 2, 3, 4, 5].map((_, i) => (
-          <Link key={i} href={`/streams/${i}`}>
-            <a className="pt-4 px-4 cursor-pointer block">
-              <div className="w-full bg-slate-300 aspect-video rounded-md shadow-sm" />
-              <h3 className="text-gray-700 text-lg mt-2">
-                Let&apos;s try potatos
+      <div className="pt-12 pb-16 space-y-4 divide-y-2">
+        {data?.streams?.map((stream) => (
+          <Link key={stream.id} href={`/streams/${stream.id}`}>
+            <a className="block px-4 pt-4 cursor-pointer">
+              <div className="bg-slate-300 aspect-video w-full rounded-md shadow-sm" />
+              <h3 className="mt-2 text-lg font-semibold text-gray-700">
+                {stream.name}
               </h3>
             </a>
           </Link>
@@ -22,7 +31,7 @@ const Streams: NextPage = () => {
         <CreateButton href="/streams/create">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
+            className="w-6 h-6"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
