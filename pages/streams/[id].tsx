@@ -3,22 +3,37 @@ import Layout from '@components/Layout';
 import Message from '@components/Message';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
-import { Stream } from '@prisma/client';
+import { Message as Messages, Stream, User } from '@prisma/client';
 import { useForm } from 'react-hook-form';
 import useMutation from '@libs/client/useMutation';
+import useUser from '@libs/client/useUser';
+import { useEffect } from 'react';
+
+interface MessagesWithUser extends Messages {
+  id: number;
+  message: string;
+  user: {
+    avatar?: string;
+    id: number;
+  };
+}
+
+interface StreamWithMessages extends Stream {
+  messages: MessagesWithUser[];
+}
 
 interface StreamResponse {
   ok: true;
-  stream: Stream;
+  stream: StreamWithMessages;
 }
 interface MessageForm {
   message: string;
 }
 
 const StreamDetail: NextPage = () => {
+  const { user } = useUser();
   const router = useRouter();
-
-  const { data } = useSWR<StreamResponse>(
+  const { data, mutate } = useSWR<StreamResponse>(
     router.query.id && `/api/streams/${router.query.id}`
   );
   const { register, handleSubmit, reset } = useForm<MessageForm>();
@@ -31,6 +46,14 @@ const StreamDetail: NextPage = () => {
     reset();
     sendMessage(form);
   };
+
+  useEffect(() => {
+    if (sendMessageData && sendMessageData.ok) {
+      mutate();
+    }
+  }, [sendMessageData, mutate]);
+
+  if (!data) return <></>;
 
   return (
     <Layout canGoBack>
@@ -48,10 +71,13 @@ const StreamDetail: NextPage = () => {
         <div>
           <h2 className="text-2xl font-bold text-gray-900">Live Chat</h2>
           <div className="py-10 h-[50vh] overflow-y-scroll px-4 space-y-4 scrollbar-hide">
-            <Message message="안녕하세요" />
-            <Message message="네 안녕하세요" reverse />
-            <Message message="상대 메세지" />
-            <Message message="내 메세지" reverse />
+            {data?.stream?.messages?.map((message) => (
+              <Message
+                key={message.id}
+                message={message.message}
+                reverse={user?.id === message.user.id}
+              />
+            ))}
           </div>
           <div className="bottom-2 fixed inset-x-0 w-full max-w-md mx-auto">
             <form

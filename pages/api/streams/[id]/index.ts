@@ -14,7 +14,18 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       id: +id.toString(),
     },
     include: {
-      messages: true,
+      messages: {
+        select: {
+          id: true,
+          message: true,
+          user: {
+            select: {
+              avatar: true,
+              id: true,
+            },
+          },
+        },
+      },
     },
   });
 
