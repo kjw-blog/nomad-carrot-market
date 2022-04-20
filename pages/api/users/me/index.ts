@@ -55,7 +55,6 @@ async function handler(
           email,
         },
       });
-      res.json({ ok: true });
     }
     if (phone && phone !== currentUser?.phone) {
       const alreadyExists = Boolean(
@@ -80,7 +79,6 @@ async function handler(
           phone,
         },
       });
-      res.json({ ok: true });
     }
     if (name) {
       await client.user.update({
