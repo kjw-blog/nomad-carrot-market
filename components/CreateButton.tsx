@@ -9,7 +9,7 @@ interface CreateButtonProps {
 export default function CreateButton({ children, href }: CreateButtonProps) {
   return (
     <Link href={href}>
-      <a className="fixed bottom-24 border-transparent right-5 hover:bg-orange-500 cursor-pointer transition-colors bg-orange-400 rounded-full p-5 text-white shadow-xl">
+      <a className="bottom-24 right-5 hover:bg-orange-500 fixed p-5 text-white transition-colors bg-orange-400 border-transparent rounded-full shadow-xl cursor-pointer">
         {children}
       </a>
     </Link>

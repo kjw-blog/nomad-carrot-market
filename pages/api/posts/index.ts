@@ -1,14 +1,14 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next';
 
-import client from "@libs/server/client";
-import withHandler, { ResponseType } from "@libs/server/withHandler";
-import { withApiSession } from "@libs/server/withSession";
+import client from '@libs/server/client';
+import withHandler, { ResponseType } from '@libs/server/withHandler';
+import { withApiSession } from '@libs/server/withSession';
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  if (req.method === "POST") {
+  if (req.method === 'POST') {
     const {
       body: { question, longitude, latitude },
       session: { user },
@@ -29,7 +29,7 @@ async function handler(
 
     res.status(200).json({ ok: true, post });
   }
-  if (req.method === "GET") {
+  if (req.method === 'GET') {
     const {
       query: { longitude, latitude },
     } = req;
@@ -64,16 +64,13 @@ async function handler(
         },
       },
     });
-
-    console.log(posts)
-
     res.status(200).json({ ok: true, posts });
   }
 }
 
 export default withApiSession(
   withHandler({
-    methods: ["POST", "GET"],
+    methods: ['POST', 'GET'],
     handler,
   })
 );

@@ -23,8 +23,6 @@ interface ItemDetailResponse {
 
 const ItemDetail: NextPage = () => {
   const router = useRouter();
-  // const { user } = useUser();
-  // const { mutate } = useSWRConfig();
 
   const {
     data,
