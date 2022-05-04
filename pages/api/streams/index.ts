@@ -29,7 +29,12 @@ async function handler(
 
     res.status(200).json({ ok: true, stream });
   } else if (req.method === 'GET') {
-    const streams = await client.stream.findMany({});
+    const page = +req.query.page - 1;
+
+    const streams = await client.stream.findMany({
+      take: 25,
+      skip: 25 * page,
+    });
 
     res.status(200).json({ ok: true, streams });
   }

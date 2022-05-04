@@ -11,8 +11,13 @@ interface StreamsResponse {
   streams: Stream[];
 }
 
+/**
+ * 강의 후반에 페이지 수정 강의가 없으면 무한 스크롤로 페이지를 변경하거나
+ * 이전 페이지에 덧붙이는 형태로 수정해보기
+ */
+
 const Streams: NextPage = () => {
-  const { data } = useSWR<StreamsResponse>('/api/streams');
+  const { data } = useSWR<StreamsResponse>('/api/streams?page=1 ');
 
   return (
     <Layout title="라이브" hasTabBar>
