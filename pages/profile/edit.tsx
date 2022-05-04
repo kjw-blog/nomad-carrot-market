@@ -37,14 +37,26 @@ const EditProfile: NextPage = () => {
   const [avatarPreview, setAvatarPreview] = useState('');
   const avatar = watch('avatar');
 
-  const onValid = ({ email, phone, name, avatar }: EditProfileForm) => {
+  const onValid = async ({ email, phone, name, avatar }: EditProfileForm) => {
     if (loading) return;
     if (!email && !phone && !name) {
       return setError('formErrors', {
         message: '이메일 혹은 전화번호 중 하나를 입력해주세요.',
       });
     }
-    editProfile({ email, phone, name });
+    if (avatar && avatar.length > 0) {
+      const cloudflareRequest = await (await fetch(`/api/files`)).json();
+      console.log(cloudflareRequest);
+
+      return;
+
+      editProfile({ email, phone, name /*avatarUrl: CloudFlareURL */ });
+    } else {
+      editProfile({ email, phone, name });
+    }
+
+    // 만약 프로필 사진이 있다면 클라우드 플레어의 url을 담아서 api를 호출하고,
+    // 그렇지 않다면 그 외의 데이터들만 담아서 api를 호출한다.
   };
 
   useEffect(() => {
