@@ -44,9 +44,16 @@ const EditProfile: NextPage = () => {
         message: '이메일 혹은 전화번호 중 하나를 입력해주세요.',
       });
     }
-    if (avatar && avatar.length > 0) {
-      const cloudflareRequest = await (await fetch(`/api/files`)).json();
-      console.log(cloudflareRequest);
+    if (avatar && avatar.length > 0 && user) {
+      const { id, uploadURL } = await (await fetch(`/api/files`)).json();
+
+      const form = new FormData();
+      form.append('file', avatar[0], user.id.toString());
+
+      await fetch(uploadURL, {
+        method: 'POST',
+        body: form,
+      });
 
       return;
 
