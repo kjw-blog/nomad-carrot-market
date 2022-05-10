@@ -24,7 +24,15 @@ const Profile: NextPage = () => {
     <Layout title="나의 캐럿" hasTabBar>
       <div className="px-4 py-10">
         <div className="flex items-center space-x-4">
-          <div className="bg-slate-400 w-16 h-16 rounded-full" />
+          {user?.avatar ? (
+            <img
+              src={`https://imagedelivery.net/jbwEg65i9cpROIJIsZXQBA/${user.avatar}/public`}
+              className="bg-slate-400 w-16 h-16 rounded-full"
+            />
+          ) : (
+            <div className="bg-slate-400 w-16 h-16 rounded-full" />
+          )}
+
           <div className="flex flex-col">
             <span className="font-semibold text-gray-900">{user?.name}</span>
             <Link href="/profile/edit">
