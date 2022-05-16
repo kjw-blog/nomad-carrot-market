@@ -1,10 +1,12 @@
-import type { NextPage } from "next";
-import CreateButton from "@components/CreateButton";
-import Item from "@components/Item";
-import Layout from "@components/Layout";
-import useUser from "@libs/client/useUser";
-import useSWR from "swr";
-import { Fav, Product } from "@prisma/client";
+import type { NextPage } from 'next';
+import CreateButton from '@components/CreateButton';
+import Item from '@components/Item';
+import Layout from '@components/Layout';
+import useUser from '@libs/client/useUser';
+import useSWR from 'swr';
+import { Product } from '@prisma/client';
+import Image from 'next/image';
+import sea from '../public/sea1.jpg';
 
 export interface ProductWithCount extends Product {
   _count: {
@@ -19,7 +21,7 @@ interface ProductsReponse {
 
 const Home: NextPage = () => {
   const { user, isLoading } = useUser();
-  const { data } = useSWR<ProductsReponse>("/api/products");
+  const { data } = useSWR<ProductsReponse>('/api/products');
 
   return (
     <Layout title="홈" hasTabBar>
@@ -51,6 +53,7 @@ const Home: NextPage = () => {
           </svg>
         </CreateButton>
       </div>
+      <Image src={sea} placeholder="blur" quality={100} objectFit={'cover'} />
     </Layout>
   );
 };

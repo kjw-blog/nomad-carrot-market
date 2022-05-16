@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import { Review, User } from '@prisma/client';
 
 import useUser from '@libs/client/useUser';
-import { cls } from '@libs/client/utils';
+import { cfUrl, cls } from '@libs/client/utils';
 import Layout from '@components/Layout';
 
 interface ReviewWithUser extends Review {
@@ -26,7 +26,7 @@ const Profile: NextPage = () => {
         <div className="flex items-center space-x-4">
           {user?.avatar ? (
             <img
-              src={`https://imagedelivery.net/jbwEg65i9cpROIJIsZXQBA/${user.avatar}/avatar`}
+              src={cfUrl({ id: user.avatar, variant: 'avatar' })}
               className="bg-slate-400 w-16 h-16 rounded-full"
             />
           ) : (

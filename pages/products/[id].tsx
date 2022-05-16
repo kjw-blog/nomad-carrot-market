@@ -6,8 +6,9 @@ import useSWR, { useSWRConfig } from 'swr';
 import { Product, User } from '@prisma/client';
 import Link from 'next/link';
 import useMutation from '@libs/client/useMutation';
-import { cls } from '@libs/client/utils';
+import { cfUrl, cls } from '@libs/client/utils';
 import { useEffect } from 'react';
+import Image from 'next/image';
 // import useUser from '@libs/client/useUser';
 
 interface ProductWithUser extends Product {
@@ -51,13 +52,34 @@ const ItemDetail: NextPage = () => {
     }
   }, [data, router]);
 
+  console.log(data?.product?.image);
+
   return (
     <Layout canGoBack>
       <div className="px-4 py-10">
         <div className="mb-8">
-          <div className="h-96 bg-slate-300" />
+          {data?.product?.image && data?.product?.image !== 'xx' ? (
+            <img src={cfUrl({ id: data?.product?.image })} className="h-96" />
+          ) : (
+            <div className="h-96 bg-slate-300" />
+          )}
+
           <div className="flex items-center py-3 space-x-3 border-t border-b cursor-pointer">
-            <div className="bg-slate-300 w-12 h-12 rounded-full" />
+            {data?.product?.user?.avatar ? (
+              <Image
+                src={cfUrl({
+                  id: data?.product?.user?.avatar,
+                  variant: 'avatar',
+                })}
+                className="w-12 h-12 rounded-full"
+                width={48}
+                height={48}
+                quality={100}
+              />
+            ) : (
+              <div className="bg-slate-300 w-12 h-12 rounded-full" />
+            )}
+
             <div>
               <p className="text-sm font-semibold text-gray-700">
                 {data?.product?.user?.name}

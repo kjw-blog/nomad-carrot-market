@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import useMutation from '@libs/client/useMutation';
 import { useState } from 'react';
+import { cfUrl } from '@libs/client/utils';
 
 interface EditProfileForm {
   avatar?: FileList;
@@ -73,9 +74,7 @@ const EditProfile: NextPage = () => {
     if (user?.phone) setValue('phone', user.phone);
     if (user?.name) setValue('name', user.name);
     if (user?.avatar)
-      setAvatarPreview(
-        `https://imagedelivery.net/jbwEg65i9cpROIJIsZXQBA/${user.avatar}/avatar`
-      );
+      setAvatarPreview(cfUrl({ id: user.avatar, variant: 'avatar' }));
   }, [user, setValue]);
 
   useEffect(() => {
