@@ -8,29 +8,29 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     query: { id },
   } = req;
 
-  const cleanId = +id.toString();
+  const _id = +id.toString();
 
   const chat = await client.chats.findUnique({
     where: {
-      id: cleanId,
+      id: _id,
     },
     include: {
-      message: {
+      message: true,
+      product: {
         select: {
-          message: true,
+          user: {
+            select: {
+              name: true,
+              avatar: true,
+              id: true,
+            },
+          },
         },
       },
       buyer: {
         select: {
-          avatar: true,
           name: true,
-          id: true,
-        },
-      },
-      seller: {
-        select: {
           avatar: true,
-          name: true,
           id: true,
         },
       },

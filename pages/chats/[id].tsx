@@ -5,6 +5,8 @@ import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import useUser from '@libs/client/useUser';
 import { Chats, Message as Massages } from '@prisma/client';
+import { useForm } from 'react-hook-form';
+import useMutation from '@libs/client/useMutation';
 
 interface User {
   avatar: string;
@@ -14,7 +16,9 @@ interface User {
 
 interface ChatWithAnother extends Chats {
   message: Massages[];
-  seller: User;
+  product: {
+    user: User;
+  };
   buyer: User;
 }
 
@@ -23,21 +27,33 @@ interface ChatData {
   chat: ChatWithAnother;
 }
 
+interface FormType {
+  chat: string;
+}
+
 const ChatDetail: NextPage = () => {
   const router = useRouter();
+
+  const { register, handleSubmit } = useForm<FormType>();
 
   const { user } = useUser();
   const { data } = useSWR<ChatData>(
     router.query.id && `/api/trade/${router.query.id}`
   );
+  const [onMessage, { loading }] = useMutation('/api/trade/message');
+
+  const onValid = ({ chat }: FormType) => {
+    if (loading) return;
+    onMessage({ chat, chatId: data?.chat?.id });
+  };
 
   return (
     <Layout
       canGoBack
       title={
-        user?.id === data?.chat?.sellerId
-          ? data?.chat?.buyer?.name
-          : data?.chat?.seller?.name
+        user?.id === data?.chat?.buyer?.id
+          ? data?.chat?.product?.user?.name
+          : data?.chat?.buyer?.name
       }
     >
       <div className="px-4 py-10 space-y-4">
@@ -45,8 +61,12 @@ const ChatDetail: NextPage = () => {
         <Message message="I want ￦20,000" reverse />
         <Message message="미쳤어" />
         <div className="bottom-2 fixed inset-x-0 w-full max-w-md mx-auto">
-          <div className="relative flex items-center">
+          <form
+            onSubmit={handleSubmit(onValid)}
+            className="relative flex items-center"
+          >
             <input
+              {...register('chat')}
               type="text"
               className="focus:ring-orange-500 focus:outline-none focus:border-orange-500 w-full pr-12 border-gray-300 rounded-full shadow-sm"
             />
@@ -55,7 +75,7 @@ const ChatDetail: NextPage = () => {
                 &rarr;
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </Layout>

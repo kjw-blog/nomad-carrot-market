@@ -26,28 +26,28 @@ datasource db {
 // referentialIntegrity 에 대한 작업을 prisma 가 할거라고 명시
 
 model User {
-  id              Int         @id @default(autoincrement())
+  id              Int           @id @default(autoincrement())
   name            String
-  phone           String?     @unique
-  email           String?     @unique
+  phone           String?       @unique
+  email           String?       @unique
   avatar          String?
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   tokens          Token[]
   products        Product[]
   posts           Post[]
   answers         Answer[]
   wonderings      Wondering[]
-  writtenReviews  Review[]    @relation(name: "writtenReviews")
-  receivedReviews Review[]    @relation(name: "receivedReviews")
+  writtenReviews  Review[]      @relation(name: "writtenReviews")
+  receivedReviews Review[]      @relation(name: "receivedReviews")
   fav             Fav[]
   sales           Sale[]
   purchases       Purchase[]
   // records          Record[]
   streams         Stream[]
   messages        Message[]
-  buyer           Chats[]     @relation(name: "buyer")
-  seller          Chats[]     @relation(name: "seller")
+  buyer           Chats[]
+  tradeChat       ChatMessage[]
 }
 
 model Token {
@@ -73,6 +73,7 @@ model Product {
   sales       Sale[]
   purchases   Purchase[]
   // records          Record[]
+  chat        Chats[]
 }
 
 model Post {
@@ -199,12 +200,11 @@ model Chats {
   id        Int           @id @default(autoincrement())
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
-  buyer     User          @relation(name: "buyer", fields: [buyerId], references: [id], onDelete: Cascade)
+  buyer     User          @relation(fields: [buyerId], references: [id], onDelete: Cascade)
   buyerId   Int
-  seller    User          @relation(name: "seller", fields: [sellerId], references: [id], onDelete: Cascade)
-  sellerId  Int
+  product   Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
   message   ChatMessage[]
-
 }
 
 model ChatMessage {
@@ -214,4 +214,6 @@ model ChatMessage {
   message   String   @db.MediumText
   chats     Chats    @relation(fields: [chatsId], references: [id], onDelete: Cascade)
   chatsId   Int
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }

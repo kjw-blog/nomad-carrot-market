@@ -53,7 +53,7 @@ const ItemDetail: NextPage = () => {
     }
     if (confirm('판매자와 대화를 시작하시겠습니까?')) {
       setTrade({
-        seller: data.product.user.id,
+        product: data.product.id,
       });
     } else {
       return;
