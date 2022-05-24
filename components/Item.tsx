@@ -1,3 +1,5 @@
+import { cfUrl } from '@libs/client/utils';
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface ItemProps {
@@ -5,14 +7,26 @@ interface ItemProps {
   price: number;
   hearts: number;
   id: number;
+  image: string;
 }
 
-export default function Item({ item, price, hearts, id }: ItemProps) {
+export default function Item({ item, price, hearts, id, image }: ItemProps) {
   return (
     <Link href={`/products/${id}`}>
       <a className="flex justify-between px-4 pb-4 border-b cursor-pointer">
         <div className="flex space-x-4">
-          <div className="w-20 h-20 bg-gray-300 rounded-md" />
+          {image && image !== 'xx' ? (
+            // <div className="w-20 h-20 bg-gray-300 rounded-md" />
+            <Image
+              src={cfUrl({ id: image })}
+              width={80}
+              height={80}
+              alt={item}
+            />
+          ) : (
+            <div className="w-20 h-20 bg-gray-300 rounded-md" />
+          )}
+
           <div className="flex flex-col pt-2">
             <h3 className="text-sm font-semibold text-gray-900">{item}</h3>
             <span className="mt-6 font-semibold text-gray-900">{`${price.toLocaleString()}원`}</span>

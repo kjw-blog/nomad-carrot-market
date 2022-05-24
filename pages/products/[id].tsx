@@ -32,6 +32,9 @@ const ItemDetail: NextPage = () => {
   } = useSWR<ItemDetailResponse>(
     router.query.id ? `/api/products/${router.query.id}` : null
   );
+
+  const [setTrade, { data: tradeData, loading: tradeLoading }] =
+    useMutation('/api/trade');
   const [toggleFav, { loading }] = useMutation(
     `/api/products/${router.query.id}/fav`
   );
@@ -44,6 +47,18 @@ const ItemDetail: NextPage = () => {
     // useSWRConfig에서 가져온 mutate함수로 (key(바꿀 swr의 url) /  변경할 data / 다시 swr을 호출할지 여부)를 파라미터로 줘서 사용할 수 있다.
     // mutate함수에 파라미터로 key 만 넘겨주게 되면 단순 refresh만 하게된다.
   };
+  const talkToSeller = () => {
+    if (tradeLoading || !data) {
+      return;
+    }
+    if (confirm('판매자와 대화를 시작하시겠습니까?')) {
+      setTrade({
+        seller: data.product.user.id,
+      });
+    } else {
+      return;
+    }
+  };
 
   useEffect(() => {
     if (data && !data.product) {
@@ -52,27 +67,30 @@ const ItemDetail: NextPage = () => {
     }
   }, [data, router]);
 
-  console.log(data?.product?.image);
+  useEffect(() => {
+    if (tradeData && tradeData.ok) {
+      router.push(`/chats/${tradeData.chat.id}`);
+    }
+  }, [tradeData, router]);
 
   return (
     <Layout canGoBack>
       <div className="px-4 py-10">
         <div className="mb-8">
-          <div className="pb-80 relative">
-            {data?.product?.image && data?.product?.image !== 'xx' ? (
-              <>
-                <Image
-                  src={cfUrl({ id: data?.product?.image })}
-                  className="bg-slate-300 object-scale-down"
-                  layout="fill"
-                />
-              </>
-            ) : (
-              <>
-                <div className="h-96 bg-slate-300" />
-              </>
-            )}
-          </div>
+          {data?.product?.image && data?.product?.image !== 'xx' ? (
+            <div className="pb-80 relative">
+              <Image
+                src={cfUrl({ id: data?.product?.image })}
+                className="bg-slate-300 object-scale-down"
+                layout="fill"
+                alt={data?.product?.name}
+              />
+            </div>
+          ) : (
+            <>
+              <div className="h-96 bg-slate-300" />
+            </>
+          )}
 
           <div className="flex items-center py-3 space-x-3 border-t border-b cursor-pointer">
             {data?.product?.user?.avatar ? (
@@ -84,6 +102,7 @@ const ItemDetail: NextPage = () => {
                 className="w-12 h-12 rounded-full"
                 width={48}
                 height={48}
+                alt={data?.product?.user?.name}
               />
             ) : (
               <div className="bg-slate-300 w-12 h-12 rounded-full" />
@@ -120,7 +139,7 @@ const ItemDetail: NextPage = () => {
             )}
 
             <div className="flex items-center justify-between space-x-2">
-              <Button text="Talk to seller" small />
+              <Button onClick={talkToSeller} text="Talk to seller" small />
               <button
                 onClick={onFavClick}
                 className={cls(

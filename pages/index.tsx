@@ -33,6 +33,7 @@ const Home: NextPage = () => {
             item={product.name}
             price={product.price}
             hearts={product._count.favs}
+            image={product.image}
           />
         ))}
         <CreateButton href="/products/upload">
@@ -53,7 +54,6 @@ const Home: NextPage = () => {
           </svg>
         </CreateButton>
       </div>
-      <Image src={sea} placeholder="blur" quality={100} objectFit={'cover'} />
     </Layout>
   );
 };

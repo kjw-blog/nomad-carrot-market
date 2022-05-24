@@ -46,6 +46,8 @@ model User {
   // records          Record[]
   streams         Stream[]
   messages        Message[]
+  buyer           Chats[]     @relation(name: "buyer")
+  seller          Chats[]     @relation(name: "seller")
 }
 
 model Token {
@@ -191,4 +193,25 @@ model Message {
   message   String   @db.MediumText
   stream    Stream   @relation(fields: [streamId], references: [id], onDelete: Cascade)
   streamId  Int
+}
+
+model Chats {
+  id        Int           @id @default(autoincrement())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  buyer     User          @relation(name: "buyer", fields: [buyerId], references: [id], onDelete: Cascade)
+  buyerId   Int
+  seller    User          @relation(name: "seller", fields: [sellerId], references: [id], onDelete: Cascade)
+  sellerId  Int
+  message   ChatMessage[]
+
+}
+
+model ChatMessage {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  message   String   @db.MediumText
+  chats     Chats    @relation(fields: [chatsId], references: [id], onDelete: Cascade)
+  chatsId   Int
 }
