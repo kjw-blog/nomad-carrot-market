@@ -37,7 +37,49 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.status(200).json({ ok: true, chat });
     }
   } else if (req.method === 'GET') {
-    res.status(200).json({ ok: true });
+    const {
+      session: { user },
+    } = req;
+
+    const chats = await client.chats.findMany({
+      where: {
+        OR: [
+          {
+            buyerId: user?.id,
+          },
+          {
+            product: {
+              userId: user?.id,
+            },
+          },
+        ],
+      },
+      include: {
+        buyer: {
+          select: {
+            avatar: true,
+            name: true,
+          },
+        },
+        product: {
+          select: {
+            user: {
+              select: {
+                name: true,
+                avatar: true,
+              },
+            },
+          },
+        },
+        message: {
+          select: {
+            message: true,
+          },
+        },
+      },
+    });
+
+    res.status(200).json({ ok: true, chats });
   }
 }
 

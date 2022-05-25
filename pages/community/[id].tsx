@@ -1,15 +1,15 @@
-import type { NextPage } from "next";
-import Button from "@components/Button";
-import Layout from "@components/Layout";
-import Textarea from "@components/Textarea";
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import { useEffect } from "react";
-import { Answer, Post, User } from "@prisma/client";
-import Link from "next/link";
-import useMutation from "@libs/client/useMutation";
-import { cls } from "@libs/client/utils";
-import { useForm } from "react-hook-form";
+import type { NextPage } from 'next';
+import Button from '@components/Button';
+import Layout from '@components/Layout';
+import Textarea from '@components/Textarea';
+import { useRouter } from 'next/router';
+import useSWR from 'swr';
+import { useEffect } from 'react';
+import { Answer, Post, User } from '@prisma/client';
+import Link from 'next/link';
+import useMutation from '@libs/client/useMutation';
+import { cls } from '@libs/client/utils';
+import { useForm } from 'react-hook-form';
 
 interface AnswerWithUser extends Answer {
   user: User;
@@ -80,8 +80,8 @@ const CommunityPostDetail: NextPage = () => {
 
   useEffect(() => {
     if (data && !data.post) {
-      alert("없는 게시글 입니다.");
-      router.replace("/community");
+      alert('없는 게시글 입니다.');
+      router.replace('/community');
     }
   }, [data, router]);
 
@@ -114,14 +114,14 @@ const CommunityPostDetail: NextPage = () => {
         </div>
         <div>
           <div className="px-4 mt-2 text-gray-700">
-            <span className="font-semibold text-orange-500">Q.</span>{" "}
+            <span className="font-semibold text-orange-500">Q.</span>{' '}
             {data?.post?.question}
           </div>
           <div className="flex px-4 space-x-5 mt-3 text-gray-700 text-sm py-2.5 border-t border-b-2 w-full">
             <button
               className={cls(
-                "flex items-center space-x-2 transition-colors duration-300",
-                data?.isWonder ? "text-teal-600" : "text-gray-700"
+                'flex items-center space-x-2 transition-colors duration-300',
+                data?.isWonder ? 'text-teal-600' : 'text-gray-700'
               )}
               onClick={onWonderClick}
             >
@@ -178,9 +178,9 @@ const CommunityPostDetail: NextPage = () => {
         </div>
         <form onSubmit={handleSubmit(onValid)} className="px-4 mb-5">
           <Textarea
-            register={register("answer", {
+            register={register('answer', {
               required: true,
-              minLength: { value: 5, message: "5글자 이상 입력해주세요." },
+              minLength: { value: 5, message: '5글자 이상 입력해주세요.' },
             })}
             placeholder="Answer this question!"
             required

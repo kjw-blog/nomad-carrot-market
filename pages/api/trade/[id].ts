@@ -10,12 +10,28 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const _id = +id.toString();
 
+  const messageCount = await client.chatMessage.findMany({
+    where: {
+      chatsId: _id,
+    },
+  });
+
+  console.log(messageCount.length);
+
   const chat = await client.chats.findUnique({
     where: {
       id: _id,
     },
     include: {
-      message: true,
+      message: {
+        take: 20,
+        skip: messageCount.length - 20 < 0 ? 0 : messageCount.length - 20,
+        select: {
+          message: true,
+          userId: true,
+          id: true,
+        },
+      },
       product: {
         select: {
           user: {

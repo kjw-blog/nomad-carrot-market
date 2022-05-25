@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 import Layout from '@components/Layout';
 import Message from '@components/Message';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { useRouter } from 'next/router';
 import useUser from '@libs/client/useUser';
-import { Chats, Message as Massages } from '@prisma/client';
+import { ChatMessage, Chats } from '@prisma/client';
 import { useForm } from 'react-hook-form';
 import useMutation from '@libs/client/useMutation';
 
@@ -15,7 +15,11 @@ interface User {
 }
 
 interface ChatWithAnother extends Chats {
-  message: Massages[];
+  message: {
+    message: string;
+    userId: number;
+    id: number;
+  }[];
   product: {
     user: User;
   };
@@ -34,17 +38,47 @@ interface FormType {
 const ChatDetail: NextPage = () => {
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm<FormType>();
+  const { register, handleSubmit, reset } = useForm<FormType>();
 
   const { user } = useUser();
-  const { data } = useSWR<ChatData>(
+  const { data, mutate } = useSWR<ChatData>(
     router.query.id && `/api/trade/${router.query.id}`
   );
   const [onMessage, { loading }] = useMutation('/api/trade/message');
 
   const onValid = ({ chat }: FormType) => {
-    if (loading) return;
+    if (!chat || loading) return;
+
+    mutate(
+      (prev) =>
+        prev && {
+          ...prev,
+          chat: {
+            ...prev.chat,
+            message: [
+              ...prev.chat.message,
+              {
+                id: Date.now(),
+                message: chat,
+                userId: user?.id || 0,
+              },
+            ],
+          },
+        },
+      false
+    );
+
     onMessage({ chat, chatId: data?.chat?.id });
+    reset();
+  };
+  const getAvatar = (me: boolean): string => {
+    if (data?.chat.buyer.id === user?.id) {
+      if (me) return data?.chat.buyer.avatar || '';
+      else return data?.chat.product.user.avatar || '';
+    } else {
+      if (me) return data?.chat.product.user.avatar || '';
+      else return data?.chat.buyer.avatar || '';
+    }
   };
 
   return (
@@ -57,9 +91,26 @@ const ChatDetail: NextPage = () => {
       }
     >
       <div className="px-4 py-10 space-y-4">
-        <Message message="Hi how much are you selling them for?" />
-        <Message message="I want ￦20,000" reverse />
-        <Message message="미쳤어" />
+        {data?.chat?.message?.map((m) => {
+          if (m.userId === user?.id) {
+            return (
+              <Message
+                key={m.id}
+                message={m.message}
+                avatarUrl={getAvatar(true)}
+                reverse
+              />
+            );
+          } else {
+            return (
+              <Message
+                key={m.id}
+                avatarUrl={getAvatar(false)}
+                message={m.message}
+              />
+            );
+          }
+        })}
         <div className="bottom-2 fixed inset-x-0 w-full max-w-md mx-auto">
           <form
             onSubmit={handleSubmit(onValid)}

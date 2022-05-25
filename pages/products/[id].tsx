@@ -9,6 +9,7 @@ import useMutation from '@libs/client/useMutation';
 import { cfUrl, cls } from '@libs/client/utils';
 import { useEffect } from 'react';
 import Image from 'next/image';
+import useUser from '@libs/client/useUser';
 // import useUser from '@libs/client/useUser';
 
 interface ProductWithUser extends Product {
@@ -24,6 +25,8 @@ interface ItemDetailResponse {
 
 const ItemDetail: NextPage = () => {
   const router = useRouter();
+
+  const { user } = useUser();
 
   const {
     data,
@@ -48,7 +51,7 @@ const ItemDetail: NextPage = () => {
     // mutate함수에 파라미터로 key 만 넘겨주게 되면 단순 refresh만 하게된다.
   };
   const talkToSeller = () => {
-    if (tradeLoading || !data) {
+    if (tradeLoading || !data || user?.id === data.product.userId) {
       return;
     }
     if (confirm('판매자와 대화를 시작하시겠습니까?')) {

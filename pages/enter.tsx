@@ -5,6 +5,7 @@ import Input from '@components/Input';
 import useMutation from '@libs/client/useMutation';
 import { cls } from '@libs/client/utils';
 import { useRouter } from 'next/router';
+import useUser from '@libs/client/useUser';
 
 interface EnterForm {
   email?: string;
@@ -21,6 +22,7 @@ interface TokenForm {
 
 export default function Enter() {
   const router = useRouter();
+  const { user } = useUser();
 
   const [enter, { loading, data, error }] =
     useMutation<MutationResult>('/api/users/enter');
@@ -51,10 +53,15 @@ export default function Enter() {
 
   useEffect(() => {
     if (tokenData && tokenData?.ok) {
-      alert('로그인 성공!');
       router.push('/');
     }
   }, [tokenData, router]);
+
+  useEffect(() => {
+    if (user && user.id) {
+      router.push('/');
+    }
+  }, [user, router]);
 
   return (
     <div className="px-4 mt-16">
