@@ -40,9 +40,7 @@
 
 CHALLENGE
 
-1. 채팅방 model
-2. 메시지 보내기 기능
+1. 채팅방 model o
+2. 메시지 보내기 기능 o
 3. 물건 예약 버튼(누르면 예약내역 생성)
 4. 예약 날짜 지나면 거래 후기 남길 수 있도록 거래 후기 버튼
-
-model 재구성 필요. chats Seller , Buyer 가 아닌, User(구매자) , Product(상품) 으로 해야할듯

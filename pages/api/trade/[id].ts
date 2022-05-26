@@ -16,8 +16,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     },
   });
 
-  console.log(messageCount.length);
-
   const chat = await client.chats.findUnique({
     where: {
       id: _id,

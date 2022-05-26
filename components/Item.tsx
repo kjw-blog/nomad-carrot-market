@@ -7,7 +7,7 @@ interface ItemProps {
   price: number;
   hearts: number;
   id: number;
-  image: string;
+  image?: string;
 }
 
 export default function Item({ item, price, hearts, id, image }: ItemProps) {
@@ -22,6 +22,7 @@ export default function Item({ item, price, hearts, id, image }: ItemProps) {
               width={80}
               height={80}
               alt={item}
+              className="w-20 h-20 bg-gray-300 rounded-md"
             />
           ) : (
             <div className="w-20 h-20 bg-gray-300 rounded-md" />
