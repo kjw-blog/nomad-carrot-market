@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+
 import Button from '@components/Button';
 import Input from '@components/Input';
+
 import useMutation from '@libs/client/useMutation';
 import { cls } from '@libs/client/utils';
-import { useRouter } from 'next/router';
-import useUser from '@libs/client/useUser';
+
+// 컴포넌트를 dynamic import 하게 되면 사용자가 해당 컴포넌트를 요청할때 까지 서버에서 다운로드 받지 않는다.
+const Bs = dynamic(() => import('@components/Bs'), { ssr: false });
 
 interface EnterForm {
   email?: string;
@@ -22,9 +27,8 @@ interface TokenForm {
 
 export default function Enter() {
   const router = useRouter();
-  const { user } = useUser();
 
-  const [enter, { loading, data, error }] =
+  const [enter, { loading, data }] =
     useMutation<MutationResult>('/api/users/enter');
   const [confirmToken, { loading: tokenLoading, data: tokenData }] =
     useMutation<MutationResult>('/api/users/confirm');
@@ -56,12 +60,6 @@ export default function Enter() {
       router.push('/');
     }
   }, [tokenData, router]);
-
-  useEffect(() => {
-    if (user && user.id) {
-      router.push('/');
-    }
-  }, [user, router]);
 
   return (
     <div className="px-4 mt-16">
@@ -132,6 +130,7 @@ export default function Enter() {
               )}
               {method === 'phone' && (
                 <>
+                  <Bs />
                   <Input
                     register={register('phone')}
                     label="Phone number"
