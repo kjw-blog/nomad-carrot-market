@@ -6,6 +6,7 @@ import { Review, User } from '@prisma/client';
 import useUser from '@libs/client/useUser';
 import { cfUrl, cls } from '@libs/client/utils';
 import Layout from '@components/Layout';
+import Image from 'next/image';
 
 interface ReviewWithUser extends Review {
   createdBy: User;
@@ -25,9 +26,10 @@ const Profile: NextPage = () => {
       <div className="px-4 py-10">
         <div className="flex items-center space-x-4">
           {user?.avatar ? (
-            <img
+            <Image
               src={cfUrl({ id: user.avatar, variant: 'avatar' })}
               className="bg-slate-400 w-16 h-16 rounded-full"
+              alt="avatar"
             />
           ) : (
             <div className="bg-slate-400 w-16 h-16 rounded-full" />

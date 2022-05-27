@@ -8,9 +8,22 @@ import Input from '@components/Input';
 
 import useMutation from '@libs/client/useMutation';
 import { cls } from '@libs/client/utils';
+import Loading from '@components/Loading';
 
 // 컴포넌트를 dynamic import 하게 되면 사용자가 해당 컴포넌트를 요청할때 까지 서버에서 다운로드 받지 않는다.
-const Bs = dynamic(() => import('@components/Bs'), { ssr: false });
+const Bs = dynamic(
+  //@ts-ignore
+  () =>
+    new Promise((resolve) =>
+      setTimeout(() => {
+        resolve(import('@components/Bs'));
+      }, 10000)
+    ),
+  {
+    ssr: false,
+    loading: () => <Loading />,
+  }
+);
 
 interface EnterForm {
   email?: string;
@@ -130,7 +143,7 @@ export default function Enter() {
               )}
               {method === 'phone' && (
                 <>
-                  <Bs />
+                  {/* <Bs /> */}
                   <Input
                     register={register('phone')}
                     label="Phone number"

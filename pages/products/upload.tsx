@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { Product } from '@prisma/client';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface UploadProductForm {
   name: string;
@@ -74,9 +75,10 @@ const Upload: NextPage = () => {
       <form onSubmit={handleSubmit(onValid)} className="px-4 py-16 space-y-5">
         <div>
           {photoPreview ? (
-            <img
+            <Image
               src={photoPreview}
               className="w-full text-gray-700 rounded-md"
+              alt="product"
             />
           ) : (
             <label className="hover:text-orange-500 hover:border-orange-500 flex items-center justify-center w-full h-48 text-gray-700 transition-colors border-2 border-gray-300 border-dashed rounded-md cursor-pointer">

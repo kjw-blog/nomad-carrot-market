@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import useMutation from '@libs/client/useMutation';
 import { useState } from 'react';
 import { cfUrl } from '@libs/client/utils';
+import Image from 'next/image';
 
 interface EditProfileForm {
   avatar?: FileList;
@@ -95,9 +96,10 @@ const EditProfile: NextPage = () => {
       <form onSubmit={handleSubmit(onValid)} className="px-4 py-10 space-y-4">
         <div className="flex items-center space-x-3">
           {avatarPreview ? (
-            <img
+            <Image
               src={avatarPreview}
               className="w-14 h-14 bg-slate-400 rounded-full"
+              alt="avatar"
             />
           ) : (
             <div className="w-14 h-14 bg-slate-400 rounded-full" />
