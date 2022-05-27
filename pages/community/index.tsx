@@ -1,10 +1,10 @@
-import type { NextPage } from "next";
-import Link from "next/link";
-import CreateButton from "@components/CreateButton";
-import Layout from "@components/Layout";
-import useSWR from "swr";
-import { Post, User } from "@prisma/client";
-import useCoords from "@libs/client/useCoords";
+import type { NextPage } from 'next';
+import Link from 'next/link';
+import CreateButton from '@components/CreateButton';
+import Layout from '@components/Layout';
+import useSWR from 'swr';
+import { Post, User } from '@prisma/client';
+import useCoords from '@libs/client/useCoords';
 
 interface PostsWithUser extends Post {
   user: User;
@@ -28,7 +28,7 @@ const Community: NextPage = () => {
   );
 
   return (
-    <Layout title="동네생활" hasTabBar>
+    <Layout tab="동네생활" title="동네생활" hasTabBar>
       <div className="py-10 space-y-8">
         {data?.posts?.map((post) => (
           <Link href={`/community/${post.id}`} key={post.id}>

@@ -77,7 +77,7 @@ const ItemDetail: NextPage = () => {
   }, [tradeData, router]);
 
   return (
-    <Layout canGoBack>
+    <Layout tab="상품상세" canGoBack>
       <div className="px-4 py-10">
         <div className="mb-8">
           {data?.product?.image && data?.product?.image !== 'xx' ? (

@@ -1,14 +1,14 @@
-import type { NextPage } from "next";
-import { useForm } from "react-hook-form";
+import type { NextPage } from 'next';
+import { useForm } from 'react-hook-form';
 
-import Button from "@components/Button";
-import Layout from "@components/Layout";
-import Textarea from "@components/Textarea";
-import useMutation from "@libs/client/useMutation";
-import { useEffect } from "react";
-import { Post } from "@prisma/client";
-import { useRouter } from "next/router";
-import useCoords from "@libs/client/useCoords";
+import Button from '@components/Button';
+import Layout from '@components/Layout';
+import Textarea from '@components/Textarea';
+import useMutation from '@libs/client/useMutation';
+import { useEffect } from 'react';
+import { Post } from '@prisma/client';
+import { useRouter } from 'next/router';
+import useCoords from '@libs/client/useCoords';
 
 interface WriteForm {
   question: string;
@@ -23,7 +23,7 @@ const Write: NextPage = () => {
   const router = useRouter();
   const { latitude, longitude } = useCoords();
   const { register, handleSubmit } = useForm<WriteForm>();
-  const [post, { loading, data }] = useMutation<WriteResponse>("/api/posts");
+  const [post, { loading, data }] = useMutation<WriteResponse>('/api/posts');
 
   const onValid = (formData: WriteForm) => {
     if (loading) return;
@@ -38,14 +38,14 @@ const Write: NextPage = () => {
   }, [data, router]);
 
   return (
-    <Layout canGoBack title="글쓰기">
+    <Layout tab="동네생활" canGoBack title="글쓰기">
       <form onSubmit={handleSubmit(onValid)} className="px-4 py-10">
         <Textarea
-          register={register("question", {
+          register={register('question', {
             required: true,
             minLength: {
               value: 5,
-              message: "5글자 이상 입력해주세요.",
+              message: '5글자 이상 입력해주세요.',
             },
           })}
           required

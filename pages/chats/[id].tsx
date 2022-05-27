@@ -83,6 +83,7 @@ const ChatDetail: NextPage = () => {
 
   return (
     <Layout
+      tab="채팅"
       canGoBack
       title={
         user?.id === data?.chat?.buyer?.id

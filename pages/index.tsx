@@ -24,7 +24,7 @@ const Home: NextPage = () => {
   const { data } = useSWR<ProductsReponse>('/api/products');
 
   return (
-    <Layout title="홈" hasTabBar>
+    <Layout title="홈" hasTabBar tab="홈">
       <div className="flex flex-col py-10 space-y-5">
         {data?.products?.map((product) => (
           <Item

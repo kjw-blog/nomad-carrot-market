@@ -92,13 +92,15 @@ const EditProfile: NextPage = () => {
   }, [avatar]);
 
   return (
-    <Layout canGoBack>
+    <Layout tab="프로필" canGoBack>
       <form onSubmit={handleSubmit(onValid)} className="px-4 py-10 space-y-4">
         <div className="flex items-center space-x-3">
           {avatarPreview ? (
             <Image
               src={avatarPreview}
               className="w-14 h-14 bg-slate-400 rounded-full"
+              width={56}
+              height={56}
               alt="avatar"
             />
           ) : (

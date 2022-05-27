@@ -68,7 +68,7 @@ const StreamDetail: NextPage = () => {
   if (!data) return <></>;
 
   return (
-    <Layout canGoBack>
+    <Layout tab="라이브" canGoBack>
       <div className="px-4 py-10 space-y-4">
         <div className="bg-slate-300 aspect-video w-full rounded-md shadow-sm" />
         <div className="mt-5">

@@ -43,7 +43,7 @@ const Chats: NextPage = () => {
   };
 
   return (
-    <Layout title="채팅" hasTabBar>
+    <Layout title="채팅" tab="채팅" hasTabBar>
       <div className="pt-6 pb-10 divide-y-[1px]">
         {data?.chats?.map((chat) => (
           <Link href={`/chats/${chat.id}`} key={chat.id}>

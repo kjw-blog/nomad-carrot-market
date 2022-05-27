@@ -94,7 +94,7 @@ const CommunityPostDetail: NextPage = () => {
   }, [answerData, reset, mutate]);
 
   return (
-    <Layout canGoBack>
+    <Layout tab="동네생활" canGoBack>
       <div className="pt-6">
         <span className="inline-flex ml-4 my-3 items-center px-2.5 py-0.5 rounded-full text-sm font-semibold text-gray-800 bg-gray-100">
           동네질문

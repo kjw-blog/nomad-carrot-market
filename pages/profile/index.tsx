@@ -22,13 +22,15 @@ const Profile: NextPage = () => {
   const { data } = useSWR<ReviewResponse>('/api/reviews');
 
   return (
-    <Layout title="나의 캐럿" hasTabBar>
+    <Layout tab="프로필" title="나의 캐럿" hasTabBar>
       <div className="px-4 py-10">
         <div className="flex items-center space-x-4">
           {user?.avatar ? (
             <Image
               src={cfUrl({ id: user.avatar, variant: 'avatar' })}
               className="bg-slate-400 w-16 h-16 rounded-full"
+              width={64}
+              height={64}
               alt="avatar"
             />
           ) : (

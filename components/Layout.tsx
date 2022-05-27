@@ -1,14 +1,16 @@
-import React from "react";
-import { cls } from "@libs/client/utils";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import NavLink from "./NavLink";
+import React from 'react';
+import { cls } from '@libs/client/utils';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import NavLink from './NavLink';
+import Head from 'next/head';
 
 interface LayoutProps {
   title?: string;
   canGoBack?: boolean;
   hasTabBar?: boolean;
   children: React.ReactNode;
+  tab: string;
 }
 
 export default function Layout({
@@ -16,6 +18,7 @@ export default function Layout({
   canGoBack,
   hasTabBar,
   children,
+  tab,
 }: LayoutProps) {
   const router = useRouter();
   const onClick = () => {
@@ -23,16 +26,19 @@ export default function Layout({
   };
   return (
     <div>
+      <Head>
+        <title>{`${tab} | 당근마켓`}</title>
+      </Head>
       <div
         className={cls(
-          !title ? "py-[1.65rem]" : "py-3",
-          "bg-white text-gray-900 w-full text-lg max-w-lg font-semibold fixed  border-b top-0 flex items-center"
+          !title ? 'py-[1.65rem]' : 'py-3',
+          'bg-white text-gray-900 w-full text-lg max-w-lg font-semibold fixed  border-b top-0 flex items-center'
         )}
       >
         {canGoBack ? (
           <button
             onClick={onClick}
-            className={cls("absolute left-4", !title ? "py-10" : "")}
+            className={cls('absolute left-4', !title ? 'py-10' : '')}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +58,7 @@ export default function Layout({
         ) : null}
         {title ? <span className="mx-auto">{title}</span> : null}
       </div>
-      <div className={cls("pt-8", hasTabBar ? " pb-[2.5rem]" : "")}>
+      <div className={cls('pt-8', hasTabBar ? ' pb-[2.5rem]' : '')}>
         {children}
       </div>
       {hasTabBar ? (
